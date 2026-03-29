@@ -1,0 +1,48 @@
+{
+  "name": "react-native-yet-another-stopwatch-timer",
+  "keywords": [
+    "stopwatch",
+    "timer",
+    "counter",
+    "react-native",
+    "performance",
+    "extensibility"
+  ],
+  "version": "1.0.0",
+  "description": "Highly extensible stopwatch, timer component for React Native",
+  "main": "index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "eslint ./ --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k5md/react-native-yet-another-stopwatch-timer.git"
+  },
+  "author": "k5md",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.19"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-native": "^0.80.2",
+    "react-native-reanimated": "^4.0.2",
+    "react-native-worklets": "^0.4.1"
+  },
+  "devDependencies": {
+    "react": "^19.1.0",
+    "react-native": "^0.80.2",
+    "react-native-reanimated": "^4.0.2",
+    "react-native-worklets": "^0.4.1"
+  },
+  "bugs": {
+    "url": "https://github.com/k5md/react-native-yet-another-stopwatch-timer/issues"
+  },
+  "homepage": "https://github.com/k5md/react-native-yet-another-stopwatch-timer#readme"
+}
