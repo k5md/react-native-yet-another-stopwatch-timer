@@ -1,0 +1,72 @@
+import React, { useCallback, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { ReducedMotionConfig, ReduceMotion } from 'react-native-reanimated';
+import { Timer, TimerStates, TimerTransitions } from 'react-native-yet-another-stopwatch-timer';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'stretch',
+    padding: '5%',
+  },
+  text: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+});
+
+export const Button = ({ label, onPress }) => (
+  <TouchableOpacity style={[ styles.container, styles.button ]} onPress={onPress}>
+    <Text style={styles.text}>{label}</Text>
+  </TouchableOpacity> 
+);
+
+const timerStyles = StyleSheet.create({
+  digit: {
+    fontSize: 40,
+  },
+});
+
+export default () => {
+  const timerRef = useRef(null);
+
+  const initialTimerValue = 50;
+
+  const playPause = useCallback(() => {
+    if (!timerRef.current) return;
+    if (timerRef.current.state.value === TimerStates.Running) timerRef.current.transition(TimerTransitions.Pause);
+    else timerRef.current.transition(TimerTransitions.Run, { counterValue: initialTimerValue });
+  }, [ timerRef ]);
+  const reset = useCallback(() => timerRef.current?.transition(TimerTransitions.Reset, { counterValue: initialTimerValue }), [ timerRef ]);
+
+  const onAfterTransition = useCallback((counter, transitionName, state) => {
+    console.log([ `Transition name: ${transitionName}`, `State: ${state.get()}`, `Counter: ${counter.get()}` ].join('\t'));
+  }, []);
+
+  useEffect(reset, [reset]);
+  
+  return (
+    <>
+      <ReducedMotionConfig mode={ReduceMotion.Never} />
+      <View style={styles.container}>
+        <Text>Timer</Text>
+        <View style={[ styles.container, styles.text ]}>
+          <Button label="Play/Pause" onPress={playPause} />
+          <Button label="Reset" onPress={reset} />
+        </View>
+        <Timer
+          onAfterTransition={onAfterTransition}
+          timerRef={timerRef}
+          style={timerStyles}
+        />
+      </View>
+    </>
+  );
+};
