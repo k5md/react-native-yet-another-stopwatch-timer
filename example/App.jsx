@@ -2,6 +2,7 @@ import React from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import Stopwatch from './Stopwatch';
 import Timer from './Timer';
+import Derived from "./Derived";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +20,7 @@ const App = () => (
     <ScrollView>
       <Stopwatch />
       <Timer />
+      <Derived />
     </ScrollView>
   </View>
 );

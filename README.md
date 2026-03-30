@@ -44,6 +44,12 @@ Check out [example project](https://github.com/k5md/react-native-yet-another-sto
 | transitionHandler | function | placeholder |
 | style | Stylesheet object | placeholder |
 
+### How to show less or more places?
+Provide your own render property and declare needed reanimated derived values for counter, that updates in timingHandler each timingInterval, by default counter gets incremented every decisecond.
+```javascript
+
+```
+
 ## Development
 In order to develop the application or build android .apk from the sources one should:
 1. Clone this repository

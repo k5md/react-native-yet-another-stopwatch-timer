@@ -25,7 +25,7 @@ const defaults = {
   timingHandler: function defaultTimingHandler(timingInterval, counter, state, timeout) {
     'worklet';
     const incrementCounter = () => {
-      if (state.get() === StopwatchStates.Running) counter.value += 1;
+      if (state.get() === StopwatchStates.Running) counter.value = (counter.value + 1) % 36000;
       timeout.set(setTimeout(incrementCounter, timingInterval));
     }
     timeout.set(setTimeout(incrementCounter, timingInterval));
@@ -39,7 +39,7 @@ const defaults = {
     if (transition === StopwatchTransitions.Stop && (state === StopwatchStates.Paused || state === StopwatchStates.Running)) return { nextState: StopwatchStates.Stopped };
   },
   render: ({ counter, style }) => {
-    const minutes = useDerivedValue(() => Math.floor(counter.get() / 6000) % 60);
+    const minutes = useDerivedValue(() => Math.floor(counter.get() / 600) % 60);
     const minutesTenths = useDerivedValue(() => Math.floor(minutes.get() / 10));
     const minutesOnes = useDerivedValue(() => minutes.get() % 10);
     const seconds = useDerivedValue(() => Math.floor(counter.get() / 10) % 60);
@@ -52,8 +52,8 @@ const defaults = {
         <Place value={minutesTenths} style={style} />
         <Place value={minutesOnes} style={style} />
         <Text style={[ style?.digit, style?.place ]}>:</Text>
-        <Place style={style} value={secondsTenths} />
-        <Place style={style} value={secondsOnes} />
+        <Place value={secondsTenths} style={style} />
+        <Place value={secondsOnes} style={style} />
         <Text style={[ style?.digit, style?.place ]}>.</Text>
         <Place value={deciseconds} style={style} />
       </>
@@ -69,6 +69,7 @@ export const Stopwatch = ({
   timerRef,
   timingHandler = defaults.timingHandler,
   timingInterval = defaults.timingInterval,
+  timingRemove = defaults.timingRemove,
   transitionHandler = defaults.transitionHandler,
   style,
 }) => (
@@ -80,6 +81,7 @@ export const Stopwatch = ({
     timerRef={timerRef}
     timingHandler={timingHandler}
     timingInterval={timingInterval}
+    timingRemove={timingRemove}
     transitionHandler={transitionHandler}
     style={style}
   />
