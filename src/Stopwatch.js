@@ -22,6 +22,7 @@ const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.
 
 const defaults = {
   initialState: StopwatchStates.Unset,
+  initialCounterValue: 0,
   timingHandler: function defaultTimingHandler(timingInterval, counter, state, timeout) {
     'worklet';
     const incrementCounter = () => {
@@ -63,6 +64,7 @@ const defaults = {
 
 export const Stopwatch = ({
   initialState = defaults.initialState,
+  initialCounterValue = defaults.initialCounterValue,
   onBeforeTransition,
   onAfterTransition,
   render = defaults.render,
@@ -75,6 +77,7 @@ export const Stopwatch = ({
 }) => (
   <Counter
     initialState={initialState}
+    initialCounterValue={initialCounterValue}
     onBeforeTransition={onBeforeTransition}
     onAfterTransition={onAfterTransition}
     render={render}

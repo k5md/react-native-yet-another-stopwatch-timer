@@ -22,6 +22,7 @@ const transitionRouter = (onBeforeTransition, onAfterTransition, state, counter,
 
 export const Counter = ({
   initialState,
+  initialCounterValue,
   onBeforeTransition,
   onAfterTransition,
   render,
@@ -32,7 +33,7 @@ export const Counter = ({
   transitionHandler,
   style,
 }) => {
-  const counter = useSharedValue(0);
+  const counter = useSharedValue(initialCounterValue);
   const state = useSharedValue(initialState);
   const timeout = useSharedValue(null);
 
