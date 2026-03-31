@@ -3,6 +3,7 @@ import { View, ScrollView, StyleSheet } from "react-native";
 import Stopwatch from './Stopwatch';
 import Timer from './Timer';
 import Derived from "./Derived";
+import Intervals from "./Intervals";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const App = () => (
       <Stopwatch />
       <Timer />
       <Derived />
+      <Intervals />
     </ScrollView>
   </View>
 );

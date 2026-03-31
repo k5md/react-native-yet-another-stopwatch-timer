@@ -39,7 +39,7 @@ export default () => {
 
   const initialTimerValue = 50;
 
-  const playPause = useCallback(() => {
+  const runPause = useCallback(() => {
     if (!timerRef.current) return;
     if (timerRef.current.state.value === TimerStates.Running) timerRef.current.transition(TimerTransitions.Pause);
     else timerRef.current.transition(TimerTransitions.Run, { counterValue: initialTimerValue });
@@ -58,7 +58,7 @@ export default () => {
       <View style={styles.container}>
         <Text>Timer</Text>
         <View style={[ styles.container, styles.text ]}>
-          <Button label="Play/Pause" onPress={playPause} />
+          <Button label="Run/Pause" onPress={runPause} />
           <Button label="Reset" onPress={reset} />
         </View>
         <Timer

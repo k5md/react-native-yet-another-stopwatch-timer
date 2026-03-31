@@ -10,11 +10,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const transitionRouter = (onBeforeTransition, onAfterTransition, state, counter, transitionHandler, transitionName, transitionContext) => {
+export const transitionRouter = (onBeforeTransition, onAfterTransition, state, counter, transitionHandler, transitionName, transitionContext) => {
   const transition = transitionHandler(transitionName, state.get(), transitionContext);
   if (!transition) return;
-  onBeforeTransition?.(counter, transitionName, state, transition.nextState, transitionContext);
-  if (transition.onBeforeTransition) transition.onBeforeTransition(counter, transitionContext);
+  let shouldInterrupt = false;
+  if (onBeforeTransition) shouldInterrupt = onBeforeTransition(counter, transitionName, state, transition?.nextState, transitionContext);
+  if (shouldInterrupt) return;
+  if (transition?.onBeforeTransition) shouldInterrupt = transition.onBeforeTransition(counter, transitionContext);
+  if (shouldInterrupt) return;
   state.set(transition.nextState);
   if (transition.onAfterTransition) transition.onAfterTransition(counter, transitionContext);
   onAfterTransition?.(counter, transitionName, state, transitionContext);
@@ -44,7 +47,7 @@ export const Counter = ({
 
   useImperativeHandle(timerRef, () => {
     const transition = transitionRouter.bind(null, onBeforeTransition, onAfterTransition, state, counter, transitionHandler);
-    return { state, transition };
+    return { counter, state, transition };
   }, [ onBeforeTransition, onAfterTransition, state, counter, transitionHandler ]);
   
   return (

@@ -20,7 +20,7 @@ export const StopwatchTransitions = {
 
 const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.set(counterValue);
 
-const defaults = {
+export const StopwatchDefaults = {
   initialState: StopwatchStates.Unset,
   initialCounterValue: 0,
   timingHandler: function defaultTimingHandler(timingInterval, counter, state, timeout) {
@@ -63,16 +63,16 @@ const defaults = {
 }
 
 export const Stopwatch = ({
-  initialState = defaults.initialState,
-  initialCounterValue = defaults.initialCounterValue,
+  initialState = StopwatchDefaults.initialState,
+  initialCounterValue = StopwatchDefaults.initialCounterValue,
   onBeforeTransition,
   onAfterTransition,
-  render = defaults.render,
+  render = StopwatchDefaults.render,
   timerRef,
-  timingHandler = defaults.timingHandler,
-  timingInterval = defaults.timingInterval,
-  timingRemove = defaults.timingRemove,
-  transitionHandler = defaults.transitionHandler,
+  timingHandler = StopwatchDefaults.timingHandler,
+  timingInterval = StopwatchDefaults.timingInterval,
+  timingRemove = StopwatchDefaults.timingRemove,
+  transitionHandler = StopwatchDefaults.transitionHandler,
   style,
 }) => (
   <Counter
