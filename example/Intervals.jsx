@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import Animated, { ReducedMotionConfig, ReduceMotion, useSharedValue } from 'react-native-reanimated';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Animated, { ReducedMotionConfig, ReduceMotion } from 'react-native-reanimated';
 import { Stopwatch, StopwatchTransitions, StopwatchStates, StopwatchDefaults, Renderers } from 'react-native-yet-another-stopwatch-timer';
 
 export const styles = StyleSheet.create({
@@ -35,10 +35,9 @@ const timerStyles = StyleSheet.create({
 });
 
 const Lap = ({ value }) => {
-  const counter = useSharedValue(value);
   return (
     <Animated.View style={{ flex: 1, flexDirection: 'row' }}>
-      {Renderers.Individual({ counter, timingInterval: StopwatchDefaults.timingInterval })}
+      {Renderers.State({ counter: value, timingInterval: StopwatchDefaults.timingInterval })}
     </Animated.View>
   );
 }

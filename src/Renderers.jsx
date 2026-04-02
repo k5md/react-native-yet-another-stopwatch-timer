@@ -5,11 +5,11 @@ import Place from './Place';
 import { getMinutes, getSeconds, getDeciseconds } from './utils';
 
 export const Individual = ({ counter, timingInterval, style }) => {
-  const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(timingInterval, counter.value) / 10) % 10, [ counter, timingInterval ]);
-  const minutesOnes = useDerivedValue(() => getMinutes(timingInterval, counter.value) % 10, [ counter, timingInterval ]);
-  const secondsTenths = useDerivedValue(() => Math.floor(getSeconds(timingInterval, counter.value) / 10) % 10, [ counter, timingInterval ]);
-  const secondsOnes = useDerivedValue(() => getSeconds(timingInterval, counter.value) % 10, [ counter, timingInterval ]);
-  const deciseconds = useDerivedValue(() => getDeciseconds(timingInterval, counter.value), [ counter, timingInterval ]);
+  const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(timingInterval, counter.value) / 10) % 10);
+  const minutesOnes = useDerivedValue(() => getMinutes(timingInterval, counter.value) % 10);
+  const secondsTenths = useDerivedValue(() => Math.floor(getSeconds(timingInterval, counter.value) / 10) % 10);
+  const secondsOnes = useDerivedValue(() => getSeconds(timingInterval, counter.value) % 10);
+  const deciseconds = useDerivedValue(() => getDeciseconds(timingInterval, counter.value));
 
   return (
     <>
@@ -34,10 +34,21 @@ export const Group = ({ counter, timingInterval, style }) => {
     const deciseconds = getDeciseconds(timingInterval, counter.value);
     const text = `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}.${deciseconds}`;
     return ({ text });
-  }, [ counter, timingInterval ]);
+  });
   return (
     <AnimatedTextInput editable={false} animatedProps={animatedProps} style={style?.digit} defaultValue="00:00.0" />
   );
 };
 
-export default { Individual, Group };
+export const State = ({ counter, timingInterval, style }) => {
+  const minutes = getMinutes(timingInterval, counter);
+  const seconds = getSeconds(timingInterval, counter);
+  const deciseconds = getDeciseconds(timingInterval, counter);
+  const text = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${deciseconds}`;
+
+  return (
+    <Text style={style?.digit}>{text}</Text>
+  );
+};
+
+export default { Individual, Group, State };
