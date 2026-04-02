@@ -52,7 +52,7 @@ export const Counter = ({
   
   return (
     <Animated.View style={[ styles.container, style?.container ]}>
-      {render({ counter, style })}
+      {render({ counter, timingInterval, initialCounterValue, style })}
     </Animated.View>
   );
 };

@@ -3,6 +3,7 @@ import Timer, { TimerStates, TimerTransitions, TimerDefaults } from './src/Timer
 import Counter from './src/Counter';
 import Place from './src/Place';
 import Digit from './src/Digit';
+import Renderers from './src/Renderers';
 
 export {
   Stopwatch, StopwatchStates, StopwatchTransitions, StopwatchDefaults,
@@ -10,4 +11,5 @@ export {
   Counter,
   Place,
   Digit,
+  Renderers,
 };

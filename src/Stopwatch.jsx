@@ -1,8 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { useDerivedValue } from 'react-native-reanimated';
 import Counter from './Counter';
-import Place from './Place';
+import Renderers from './Renderers';
 
 export const StopwatchStates = {
   Unset: 'Unset',
@@ -18,56 +16,42 @@ export const StopwatchTransitions = {
   Stop: 'Stop',
 };
 
-const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.set(counterValue);
-
-export const StopwatchDefaults = {
-  initialState: StopwatchStates.Unset,
-  initialCounterValue: 0,
-  timingHandler: function defaultTimingHandler(timingInterval, counter, state, timeout) {
+export const StopwatchDefaults = (() => {
+  const initialState = StopwatchStates.Unset;
+  const initialCounterValue = 0;
+  const timingHandler = function defaultTimingHandler(timingInterval, counter, state, timeout) {
     'worklet';
     const incrementCounter = () => {
       if (state.get() === StopwatchStates.Running) counter.value = (counter.value + 1) % 36000;
       timeout.set(setTimeout(incrementCounter, timingInterval));
     }
     timeout.set(setTimeout(incrementCounter, timingInterval));
-  },
-  timingInterval: 100,
-  timingRemove: (timeout) => clearTimeout(timeout.get()),
-  transitionHandler: (transition, state) => {
+  };
+  const timingInterval = 100;
+  const timingRemove = (timeout) => clearTimeout(timeout.get());
+  const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.set(counterValue);
+  const transitionHandler = (transition, state) => {
     if (transition === StopwatchTransitions.Reset) return { nextState: state, onBeforeTransition: setCounter };
     if (transition === StopwatchTransitions.Pause && state === StopwatchStates.Running) return { nextState: StopwatchStates.Paused };
     if (transition === StopwatchTransitions.Run) return { nextState: StopwatchStates.Running, onBeforeTransition: state === StopwatchStates.Stopped && setCounter };
     if (transition === StopwatchTransitions.Stop && (state === StopwatchStates.Paused || state === StopwatchStates.Running)) return { nextState: StopwatchStates.Stopped };
-  },
-  render: ({ counter, style }) => {
-    const minutes = useDerivedValue(() => Math.floor(counter.get() / 600) % 60);
-    const minutesTenths = useDerivedValue(() => Math.floor(minutes.get() / 10));
-    const minutesOnes = useDerivedValue(() => minutes.get() % 10);
-    const seconds = useDerivedValue(() => Math.floor(counter.get() / 10) % 60);
-    const secondsTenths = useDerivedValue(() => Math.floor(seconds.get() / 10));
-    const secondsOnes = useDerivedValue(() => seconds.get() % 10);
-    const deciseconds = useDerivedValue(() => counter.get() % 10);
-
-    return (
-      <>
-        <Place value={minutesTenths} style={style} />
-        <Place value={minutesOnes} style={style} />
-        <Text style={[ style?.digit, style?.place ]}>:</Text>
-        <Place value={secondsTenths} style={style} />
-        <Place value={secondsOnes} style={style} />
-        <Text style={[ style?.digit, style?.place ]}>.</Text>
-        <Place value={deciseconds} style={style} />
-      </>
-    )
-  },
-}
+  };
+  return {
+    initialState,
+    initialCounterValue,
+    timingHandler,
+    timingInterval,
+    timingRemove,
+    transitionHandler,
+  };
+})();
 
 export const Stopwatch = ({
   initialState = StopwatchDefaults.initialState,
   initialCounterValue = StopwatchDefaults.initialCounterValue,
   onBeforeTransition,
   onAfterTransition,
-  render = StopwatchDefaults.render,
+  render = Renderers.Group,
   timerRef,
   timingHandler = StopwatchDefaults.timingHandler,
   timingInterval = StopwatchDefaults.timingInterval,

@@ -5,8 +5,8 @@ import { runOnJS } from 'react-native-worklets';
 export { StopwatchStates as TimerStates };
 export { StopwatchTransitions as TimerTransitions };
 
-export const TimerDefaults = {
-  timingHandler: function defaultTimingHandler(timingInterval, counter, state, timeout, timerRef) {
+export const TimerDefaults = (() => {
+  const timingHandler = function defaultTimingHandler(timingInterval, counter, state, timeout, timerRef) {
     'worklet';
     const decrementCounter = () => {
       if (state.get() === StopwatchStates.Running) {
@@ -16,8 +16,9 @@ export const TimerDefaults = {
       timeout.set(setTimeout(decrementCounter, timingInterval));
     }
     timeout.set(setTimeout(decrementCounter, timingInterval));
-  },
-};
+  };
+  return { timingHandler };
+})();
 
 export const Timer = ({
   timingHandler = TimerDefaults.timingHandler,

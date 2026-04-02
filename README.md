@@ -25,7 +25,7 @@ npm install react-native-yet-another-stopwatch-timer --save
 ```
 ### Usage
 Check out [example project](https://github.com/k5md/react-native-yet-another-stopwatch-timer/tree/master/example).
- 
+
 ```javascript
 
 ```
@@ -46,6 +46,12 @@ Check out [example project](https://github.com/k5md/react-native-yet-another-sto
 
 ### How to show less or more places?
 Provide your own render property and declare needed reanimated derived values for counter, that updates in timingHandler each timingInterval, by default counter gets incremented every decisecond.
+```javascript
+
+```
+
+### How to get better precision?
+setTimeout and setInterval guarantee that callback will be called *not sooner* than timeout ms. For precise timing you can either implement a self adjusting timer using Date.now(), or if you just need to accurately capture when play, pause or stop events occur, capture precise time in global onBeforeTransition/onAfterTransition handlers, or for individual transitions in transitionHandler.
 ```javascript
 
 ```

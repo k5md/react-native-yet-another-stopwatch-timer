@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { ReducedMotionConfig, ReduceMotion } from 'react-native-reanimated';
-import { Stopwatch, StopwatchTransitions, StopwatchDefaults } from 'react-native-yet-another-stopwatch-timer';
+import Animated, { ReducedMotionConfig, ReduceMotion, useSharedValue } from 'react-native-reanimated';
+import { Stopwatch, StopwatchTransitions, StopwatchStates, StopwatchDefaults, Renderers } from 'react-native-yet-another-stopwatch-timer';
 
 export const styles = StyleSheet.create({
   container: {
@@ -34,6 +34,15 @@ const timerStyles = StyleSheet.create({
   },
 });
 
+const Lap = ({ value }) => {
+  const counter = useSharedValue(value);
+  return (
+    <Animated.View style={{ flex: 1, flexDirection: 'row' }}>
+      {Renderers.Individual({ counter, timingInterval: StopwatchDefaults.timingInterval })}
+    </Animated.View>
+  );
+}
+
 export default () => {
   const timerRef = useRef(null);
 
@@ -45,8 +54,7 @@ export default () => {
     timerRef.current?.transition(StopwatchTransitions.Run)
   }, [ timerRef, setStart ]);
   const lap = useCallback(() => {
-    if (timerRef.current) setLaps((laps) => laps.concat(timerRef.current.counter.get()));
-    timerRef.current?.transition(StopwatchTransitions.Lap);
+    if (timerRef.current?.state.get() === StopwatchStates.Running) setLaps((laps) => laps.concat(timerRef.current.counter.get() - start));
   }, [ timerRef ]);
   const stop = useCallback(() => timerRef.current?.transition(StopwatchTransitions.Stop), [ timerRef ]);
   const reset = useCallback(() => {
@@ -69,10 +77,9 @@ export default () => {
           timerRef={timerRef}
           style={timerStyles}
         />
-        <ScrollView>
-          <Text>{start}</Text>
-          {laps.map((lap) => <Text>{lap}</Text>)}
-        </ScrollView>
+        <View>
+          {laps.map((lap) => <Lap value={lap} />)}
+        </View>
       </View>
     </>
   );
