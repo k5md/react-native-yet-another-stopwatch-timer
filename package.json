@@ -26,9 +26,7 @@
   },
   "author": "k5md",
   "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.19"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "^19.1.0",
     "react-native": "^0.80.2",
