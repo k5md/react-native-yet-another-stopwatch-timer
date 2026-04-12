@@ -32,7 +32,7 @@ export const Counter = ({
   timerRef,
   timingHandler,
   timingInterval,
-  timingRemove,
+  removeTiming,
   transitionHandler,
   style,
 }) => {
@@ -42,12 +42,12 @@ export const Counter = ({
 
   useEffect(() => {
     runOnUI(timingHandler)(timingInterval, counter, state, timeout, timerRef);
-    return () => timingRemove(timeout);
-  }, [ timingHandler, timingInterval, counter, state, timeout, timerRef, timingRemove ]);
+    return () => removeTiming(timeout);
+  }, [ timingHandler, timingInterval, counter, state, timeout, timerRef, removeTiming ]);
 
   useImperativeHandle(timerRef, () => {
     const transition = transitionRouter.bind(null, onBeforeTransition, onAfterTransition, state, counter, transitionHandler);
-    return { counter, state, transition };
+    return { state, counter, transition };
   }, [ onBeforeTransition, onAfterTransition, state, counter, transitionHandler ]);
   
   return (

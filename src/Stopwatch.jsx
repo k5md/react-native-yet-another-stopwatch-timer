@@ -28,7 +28,7 @@ export const StopwatchDefaults = (() => {
     timeout.set(setTimeout(incrementCounter, timingInterval));
   };
   const timingInterval = 100;
-  const timingRemove = (timeout) => clearTimeout(timeout.get());
+  const removeTiming = (timeout) => clearTimeout(timeout.get());
   const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.set(counterValue);
   const transitionHandler = (transition, state) => {
     if (transition === StopwatchTransitions.Reset) return { nextState: state, onBeforeTransition: setCounter };
@@ -41,7 +41,7 @@ export const StopwatchDefaults = (() => {
     initialCounterValue,
     timingHandler,
     timingInterval,
-    timingRemove,
+    removeTiming,
     transitionHandler,
   };
 })();
@@ -55,7 +55,7 @@ export const Stopwatch = ({
   timerRef,
   timingHandler = StopwatchDefaults.timingHandler,
   timingInterval = StopwatchDefaults.timingInterval,
-  timingRemove = StopwatchDefaults.timingRemove,
+  removeTiming = StopwatchDefaults.removeTiming,
   transitionHandler = StopwatchDefaults.transitionHandler,
   style,
 }) => (
@@ -68,7 +68,7 @@ export const Stopwatch = ({
     timerRef={timerRef}
     timingHandler={timingHandler}
     timingInterval={timingInterval}
-    timingRemove={timingRemove}
+    removeTiming={removeTiming}
     transitionHandler={transitionHandler}
     style={style}
   />

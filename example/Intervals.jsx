@@ -53,7 +53,7 @@ export default () => {
     timerRef.current?.transition(StopwatchTransitions.Run)
   }, [ timerRef, setStart ]);
   const lap = useCallback(() => {
-    if (timerRef.current?.state.get() === StopwatchStates.Running) setLaps((laps) => laps.concat(timerRef.current.counter.get() - start));
+    if (timerRef.current?.state.get() === StopwatchStates.Running) setLaps((laps) => laps.concat({ id: laps.length, lap: timerRef.current.counter.get() - start }));
   }, [ timerRef ]);
   const stop = useCallback(() => timerRef.current?.transition(StopwatchTransitions.Stop), [ timerRef ]);
   const reset = useCallback(() => {
@@ -77,7 +77,7 @@ export default () => {
           style={timerStyles}
         />
         <View>
-          {laps.map((lap) => <Lap value={lap} />)}
+          {laps.map(({ id, lap }) => <Lap key={id} value={lap} />)}
         </View>
       </View>
     </>
