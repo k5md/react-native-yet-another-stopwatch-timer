@@ -1,32 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Animated, { ReducedMotionConfig, ReduceMotion } from 'react-native-reanimated';
 import { Stopwatch, StopwatchTransitions, StopwatchStates, StopwatchDefaults, Renderers } from 'react-native-yet-another-stopwatch-timer';
-
-export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignContent: 'stretch',
-    padding: '5%',
-  },
-  text: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: 'black',
-  },
-});
-
-export const Button = ({ label, onPress }) => (
-  <TouchableOpacity style={[ styles.container, styles.button ]} onPress={onPress}>
-    <Text style={styles.text}>{label}</Text>
-  </TouchableOpacity> 
-);
+import { styles, Button } from './Common';
 
 const timerStyles = StyleSheet.create({
   digit: {
