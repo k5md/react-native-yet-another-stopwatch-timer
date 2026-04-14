@@ -25,15 +25,18 @@ export default () => {
   const [ laps, setLaps ] = useState([]);
 
   const run = useCallback(() => {
-    if (timerRef.current) setStart(timerRef.current.counter.get());
-    timerRef.current?.transition(StopwatchTransitions.Run)
+    if (!timerRef.current) return;
+    setStart(timerRef.current.counter.value);
+    timerRef.current.transition({ name: StopwatchTransitions.Run });
   }, [ timerRef, setStart ]);
   const lap = useCallback(() => {
-    if (timerRef.current?.state.get() === StopwatchStates.Running) setLaps((laps) => laps.concat({ id: laps.length, lap: timerRef.current.counter.get() - start }));
+    if (timerRef.current?.state.value !== StopwatchStates.Running) return;
+    setLaps((laps) => laps.concat({ id: laps.length, lap: timerRef.current.counter.value - start }));
   }, [ timerRef ]);
-  const stop = useCallback(() => timerRef.current?.transition(StopwatchTransitions.Stop), [ timerRef ]);
+  const stop = useCallback(() => timerRef.current?.transition({ name: StopwatchTransitions.Stop }), [ timerRef ]);
   const reset = useCallback(() => {
-    timerRef.current?.transition(StopwatchTransitions.Reset);
+    if (!timerRef.current) return;
+    timerRef.current.transition({ name: StopwatchTransitions.Reset });
     setLaps([]);
   }, [ timerRef, setLaps ]);
   

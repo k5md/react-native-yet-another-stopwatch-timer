@@ -19,22 +19,22 @@ export const StopwatchTransitions = {
 export const StopwatchDefaults = (() => {
   const initialState = StopwatchStates.Unset;
   const initialCounterValue = 0;
-  const timingHandler = function defaultTimingHandler(timingInterval, counter, state, timeout) {
+  const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout }) {
     'worklet';
     const incrementCounter = () => {
-      if (state.get() === StopwatchStates.Running) counter.value = (counter.value + 1) % 36000;
-      timeout.set(setTimeout(incrementCounter, timingInterval));
+      if (state.value === StopwatchStates.Running) counter.value = (counter.value + 1) % 36000;
+      timeout.value = setTimeout(incrementCounter, timingInterval);
     }
-    timeout.set(setTimeout(incrementCounter, timingInterval));
+    timeout.value = setTimeout(incrementCounter, timingInterval);
   };
   const timingInterval = 100;
-  const removeTiming = (timeout) => clearTimeout(timeout.get());
-  const setCounter = (counter, { counterValue } = { counterValue: 0 }) => counter.set(counterValue);
-  const transitionHandler = (transition, state) => {
-    if (transition === StopwatchTransitions.Reset) return { nextState: state, onBeforeTransition: setCounter };
-    if (transition === StopwatchTransitions.Pause && state === StopwatchStates.Running) return { nextState: StopwatchStates.Paused };
-    if (transition === StopwatchTransitions.Run) return { nextState: StopwatchStates.Running, onBeforeTransition: state === StopwatchStates.Stopped && setCounter };
-    if (transition === StopwatchTransitions.Stop && (state === StopwatchStates.Paused || state === StopwatchStates.Running)) return { nextState: StopwatchStates.Stopped };
+  const removeTiming = (timeout) => clearTimeout(timeout.value);
+  const setCounter = ({ counter }, { counterValue }) => counter.set(counterValue || 0);
+  const transitionHandler = ({ state }, { name }) => {
+    if (name === StopwatchTransitions.Reset) return { nextState: state.value, onBeforeTransition: setCounter };
+    if (name === StopwatchTransitions.Pause && state.value === StopwatchStates.Running) return { nextState: StopwatchStates.Paused };
+    if (name === StopwatchTransitions.Run) return { nextState: StopwatchStates.Running, onBeforeTransition: state.value === StopwatchStates.Stopped && setCounter };
+    if (name === StopwatchTransitions.Stop && (state.value === StopwatchStates.Paused || state.value === StopwatchStates.Running)) return { nextState: StopwatchStates.Stopped };
   };
   return {
     initialState,

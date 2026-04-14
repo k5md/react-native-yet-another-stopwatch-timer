@@ -15,12 +15,13 @@ export default () => {
 
   const initialTimerValue = 10 * 60 * 60 * 99;
 
-  const playPause = useCallback(() => {
-    if (!timerRef.current) return;
-    if (timerRef.current.state.value === TimerStates.Running) timerRef.current.transition(TimerTransitions.Pause);
-    else timerRef.current.transition(TimerTransitions.Run, { counterValue: initialTimerValue });
-  }, [ timerRef ]);
-  const reset = useCallback(() => timerRef.current?.transition(TimerTransitions.Reset, { counterValue: initialTimerValue }), [ timerRef ]);
+  const playPause = useCallback(() => timerRef.current?.transition({
+    name: timerRef.current.state.value === TimerStates.Running ? TimerTransitions.Pause : TimerTransitions.Run,
+  }), [ timerRef ]);
+  const reset = useCallback(() => timerRef.current?.transition({
+    name: TimerTransitions.Reset,
+    counterValue: initialTimerValue,
+  }), [ timerRef ]);
 
   useEffect(reset, [reset]);
 
@@ -37,15 +38,15 @@ export default () => {
           timerRef={timerRef}
           style={timerStyles}
           render={({ counter, style }) => {
-            const hours = useDerivedValue(() => Math.floor(counter.get() / 10 / 60 / 60));
-            const hoursTenths = useDerivedValue(() => Math.floor(hours.get() / 10));
-            const hoursOnes = useDerivedValue(() => hours.get() % 10);
-            const minutes = useDerivedValue(() => Math.floor(counter.get() / 10 / 60) % 60);
-            const minutesTenths = useDerivedValue(() => Math.floor(minutes.get() / 10));
-            const minutesOnes = useDerivedValue(() => minutes.get() % 10);
-            const seconds = useDerivedValue(() => Math.floor(counter.get() / 10) % 60);
-            const secondsTenths = useDerivedValue(() => Math.floor(seconds.get() / 10));
-            const secondsOnes = useDerivedValue(() => seconds.get() % 10);
+            const hours = useDerivedValue(() => Math.floor(counter.value / 10 / 60 / 60));
+            const hoursTenths = useDerivedValue(() => Math.floor(hours.value / 10));
+            const hoursOnes = useDerivedValue(() => hours.value % 10);
+            const minutes = useDerivedValue(() => Math.floor(counter.value / 10 / 60) % 60);
+            const minutesTenths = useDerivedValue(() => Math.floor(minutes.value / 10));
+            const minutesOnes = useDerivedValue(() => minutes.value % 10);
+            const seconds = useDerivedValue(() => Math.floor(counter.value / 10) % 60);
+            const secondsTenths = useDerivedValue(() => Math.floor(seconds.value / 10));
+            const secondsOnes = useDerivedValue(() => seconds.value % 10);
 
             return (
               <>

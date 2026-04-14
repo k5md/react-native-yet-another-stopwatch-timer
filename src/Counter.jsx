@@ -10,17 +10,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export const transitionRouter = (onBeforeTransition, onAfterTransition, state, counter, transitionHandler, transitionName, transitionContext) => {
-  const transition = transitionHandler(transitionName, state.get(), transitionContext);
+export const transitionRouter = (transitionContext, transitionExtraContext) => {
+  const transition = transitionContext.transitionHandler(transitionContext, transitionExtraContext);
   if (!transition) return;
   let shouldInterrupt = false;
-  if (onBeforeTransition) shouldInterrupt = onBeforeTransition(counter, transitionName, state, transition?.nextState, transitionContext);
+  if (transitionContext?.onBeforeTransition) shouldInterrupt = transitionContext.onBeforeTransition(transitionContext, transitionExtraContext, transition);
   if (shouldInterrupt) return;
-  if (transition?.onBeforeTransition) shouldInterrupt = transition.onBeforeTransition(counter, transitionContext);
+  if (transition.onBeforeTransition) shouldInterrupt = transition.onBeforeTransition(transitionContext, transitionExtraContext, transition);
   if (shouldInterrupt) return;
-  state.set(transition.nextState);
-  if (transition.onAfterTransition) transition.onAfterTransition(counter, transitionContext);
-  onAfterTransition?.(counter, transitionName, state, transitionContext);
+  transitionContext.state.value = transition.nextState;
+  if (transition.onAfterTransition) transition.onAfterTransition(transitionContext, transitionExtraContext, transition);
+  transitionContext.onAfterTransition?.(transitionContext, transitionExtraContext, transition);
 };
 
 export const Counter = ({
@@ -29,10 +29,10 @@ export const Counter = ({
   onBeforeTransition,
   onAfterTransition,
   render,
+  removeTiming,
   timerRef,
   timingHandler,
   timingInterval,
-  removeTiming,
   transitionHandler,
   style,
 }) => {
@@ -41,14 +41,15 @@ export const Counter = ({
   const timeout = useSharedValue(null);
 
   useEffect(() => {
-    runOnUI(timingHandler)(timingInterval, counter, state, timeout, timerRef);
+    runOnUI(timingHandler)({ timingInterval, counter, state, timeout, timerRef });
     return () => removeTiming(timeout);
   }, [ timingHandler, timingInterval, counter, state, timeout, timerRef, removeTiming ]);
 
   useImperativeHandle(timerRef, () => {
-    const transition = transitionRouter.bind(null, onBeforeTransition, onAfterTransition, state, counter, transitionHandler);
-    return { state, counter, transition };
-  }, [ onBeforeTransition, onAfterTransition, state, counter, transitionHandler ]);
+    const transitionContext = { onBeforeTransition, onAfterTransition, state, counter, transitionHandler };
+    const transition = transitionRouter.bind(null, transitionContext);
+    return { state, counter, timeout, transition };
+  }, [ onBeforeTransition, onAfterTransition, state, counter, timeout, transitionHandler ]);
   
   return (
     <Animated.View style={[ styles.container, style?.container ]}>

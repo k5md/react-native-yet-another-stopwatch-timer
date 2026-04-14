@@ -17,13 +17,19 @@ export default () => {
 
   const runPause = useCallback(() => {
     if (!timerRef.current) return;
-    if (timerRef.current.state.value === TimerStates.Running) timerRef.current.transition(TimerTransitions.Pause);
-    else timerRef.current.transition(TimerTransitions.Run, { counterValue: initialTimerValue });
+    if (timerRef.current.state.value === TimerStates.Running) {
+      timerRef.current.transition({ name: TimerTransitions.Pause });
+    } else {
+      timerRef.current.transition({ name: TimerTransitions.Run, counterValue: initialTimerValue });
+    }
   }, [ timerRef ]);
-  const reset = useCallback(() => timerRef.current?.transition(TimerTransitions.Reset, { counterValue: initialTimerValue }), [ timerRef ]);
+  const reset = useCallback(() => timerRef.current?.transition({
+    name: TimerTransitions.Reset, 
+    counterValue: initialTimerValue,
+  }), [ timerRef ]);
 
-  const onAfterTransition = useCallback((counter, transitionName, state) => {
-    console.log([ `Transition name: ${transitionName}`, `State: ${state.get()}`, `Counter: ${counter.get()}` ].join('\t'));
+  const onAfterTransition = useCallback(({ counter, state }, { name }) => {
+    console.log([ `Transition: ${name}`, `Counter: ${counter.value}`, `State: ${state.value}` ].join('\t'));
   }, []);
 
   useEffect(reset, [reset]);

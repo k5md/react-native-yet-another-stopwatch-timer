@@ -6,16 +6,16 @@ export { StopwatchStates as TimerStates };
 export { StopwatchTransitions as TimerTransitions };
 
 export const TimerDefaults = (() => {
-  const timingHandler = function defaultTimingHandler(timingInterval, counter, state, timeout, timerRef) {
+  const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout, timerRef }) {
     'worklet';
     const decrementCounter = () => {
-      if (state.get() === StopwatchStates.Running) {
-        if (counter.get() > 0) counter.value -= 1;
-        if (counter.get() < 1) runOnJS(timerRef.current.transition)(StopwatchTransitions.Stop);
+      if (state.value === StopwatchStates.Running) {
+        if (counter.value > 0) counter.value -= 1;
+        if (counter.value < 1) runOnJS(timerRef.current.transition)({ name: StopwatchTransitions.Stop });
       }
-      timeout.set(setTimeout(decrementCounter, timingInterval));
+      timeout.value = setTimeout(decrementCounter, timingInterval);
     }
-    timeout.set(setTimeout(decrementCounter, timingInterval));
+    timeout.value = setTimeout(decrementCounter, timingInterval);
   };
   return { timingHandler };
 })();

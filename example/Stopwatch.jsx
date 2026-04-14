@@ -15,14 +15,15 @@ export default () => {
 
   const runPause = useCallback(() => { 
     if (!timerRef.current) return;
-    if (timerRef.current.state.value === StopwatchStates.Running) timerRef.current.transition(StopwatchTransitions.Pause);
-    else timerRef.current.transition(StopwatchTransitions.Run);
+    timerRef.current.transition({
+      name: timerRef.current.state.value === StopwatchStates.Running ? StopwatchTransitions.Pause : StopwatchTransitions.Run,
+    });
   }, [ timerRef ]);
-  const stop = useCallback(() => timerRef.current?.transition(StopwatchTransitions.Stop), [ timerRef ]);
-  const reset = useCallback(() => timerRef.current?.transition(StopwatchTransitions.Reset), [ timerRef ]);
+  const stop = useCallback(() => timerRef.current?.transition({ name: StopwatchTransitions.Stop }), [ timerRef ]);
+  const reset = useCallback(() => timerRef.current?.transition({ name: StopwatchTransitions.Reset }), [ timerRef ]);
 
-  const onAfterTransition = useCallback((counter, transitionName, state) => {
-    console.log([ `Transition name: ${transitionName}`, `State: ${state.get()}`, `Counter: ${counter.get()}` ].join('\t'));
+  const onAfterTransition = useCallback(({ counter, state }, { name }) => {
+    console.log([ `Transition: ${name}`, `Counter: ${counter.value}`, `State: ${state.value}` ].join('\t'));
   }, []);
   
   return (
