@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "react-native-yet-another-stopwatch-timer": [ "../" ]
+    }
+  },
+  "include": [
+    "**/*",
+    "../**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "../node_modules/*"
+  ]
+}

@@ -30,7 +30,7 @@
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
  * @param {Transition} transition
- * @returns {bool} shouldInterrupt flag, if true transition won't happen
+ * @returns {bool | void} shouldInterrupt flag, if true transition won't happen
  */
 
 /**
@@ -38,7 +38,7 @@
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
  * @param {any} transition
- * @returns {bool} shouldInterrupt flag, if true transition won't happen
+ * @returns {bool | void} shouldInterrupt flag, if true transition won't happen
  */
 
 /**

@@ -19,4 +19,5 @@ export const Digit = ({ assignedDigit, actualDigit, style }) => {
   );
 };
 
+/** @type {typeof Digit} */
 export default Digit;

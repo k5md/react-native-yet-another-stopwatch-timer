@@ -56,4 +56,5 @@ export const State = ({ counter, timingInterval, style }) => {
   );
 };
 
+/** @type {{ Individual: typeof Individual, Group: typeof Group, State: typeof State }} */
 export default { Individual, Group, State };

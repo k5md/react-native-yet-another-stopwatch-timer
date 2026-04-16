@@ -79,4 +79,5 @@ export const Counter = ({
   );
 };
 
+/** @type {typeof Counter} */
 export default Counter;

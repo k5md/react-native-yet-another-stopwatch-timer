@@ -83,4 +83,5 @@ export const Stopwatch = ({
   />
 );
 
+/** @type {typeof Stopwatch} */
 export default Stopwatch;

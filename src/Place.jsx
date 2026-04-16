@@ -21,4 +21,5 @@ export const Place = ({ digit: actualDigit, style }) => {
   return (<View style={[ styles.place, style?.place ]}>{range}</View>);
 };
 
+/** @type {typeof Place} */
 export default Place;

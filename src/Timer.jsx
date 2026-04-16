@@ -1,5 +1,5 @@
 import React from 'react';
-import Stopwatch, { StopwatchStates, StopwatchTransitions } from './Stopwatch';
+import { Stopwatch, StopwatchStates, StopwatchTransitions } from './Stopwatch';
 import { runOnJS } from 'react-native-worklets';
 
 /** @typedef {import('./types').TimingHandler} Types.TimingHandler */
@@ -30,4 +30,5 @@ export const Timer = ({
   ...props
 }) => (<Stopwatch timingHandler={timingHandler} {...props} />);
 
+/**@type {typeof Timer} */
 export default Timer;
