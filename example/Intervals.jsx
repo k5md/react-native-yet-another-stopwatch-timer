@@ -27,16 +27,16 @@ export default () => {
   const run = useCallback(() => {
     if (!timerRef.current) return;
     setStart(timerRef.current.counter.value);
-    timerRef.current.transition({ name: StopwatchTransitions.Run });
+    timerRef.current.transitionTo({ name: StopwatchTransitions.Run });
   }, [ timerRef, setStart ]);
   const lap = useCallback(() => {
     if (timerRef.current?.state.value !== StopwatchStates.Running) return;
     setLaps((laps) => laps.concat({ id: laps.length, lap: timerRef.current.counter.value - start }));
   }, [ timerRef ]);
-  const stop = useCallback(() => timerRef.current?.transition({ name: StopwatchTransitions.Stop }), [ timerRef ]);
+  const stop = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Stop }), [ timerRef ]);
   const reset = useCallback(() => {
     if (!timerRef.current) return;
-    timerRef.current.transition({ name: StopwatchTransitions.Reset });
+    timerRef.current.transitionTo({ name: StopwatchTransitions.Reset });
     setLaps([]);
   }, [ timerRef, setLaps ]);
   

@@ -1,56 +1,131 @@
+/** @typedef {import('../example/node_modules/react-native-reanimated').SharedValue<any>} SharedValue */
+
+/** @typedef {import('react').ReactNode} ReactNode */
+
+/**@typedef {import('../example/node_modules/react-native').ViewStyle | import('../example/node_modules/react-native').TextStyle | import('../example/node_modules/react-native').ImageStyle} AnyStyle */
+
 /**
- * 
- * @typedef {object} RenderProps
- * @property {any} counter 
- * @property {any} timingInterval
- * @property {any} initialCounterValue
- * @property {any} style
- * 
+ * @template T
+ * @typedef {import('../example/node_modules/react-native').StyleSheet.NamedStyles<T>} NamedStyles
  */
 
 /**
- * @typedef {object} CounterProps
+ * @typedef {{
+ *   name: string,
+ *   onBeforeTransition?: OnBeforeTransition,
+ *   onAfterTransition?: OnAfterTransition,
+ * } & Record<string, any>} TransitionExtraContext
+ */
+
+/**
+ * @callback OnBeforeTransition
+ * @param {TransitionContext} transitionContext
+ * @param {TransitionExtraContext} transitionExtraContext
+ * @param {any} transition
+ * @returns {bool} shouldInterrupt flag, if true transition won't happen
+ */
+
+/**
+ * @callback OnAfterTransition
+ * @param {TransitionContext} transitionContext
+ * @param {TransitionExtraContext} transitionExtraContext
+ * @param {any} transition
+ * @returns {bool} shouldInterrupt flag, if true transition won't happen
+ */
+
+/**
+ * @callback TransitionHandler
+ * @param {TransitionContext} transitionContext
+ * @param {TransitionExtraContext} transitionExtraContext
+ * @returns {{
+ *  onBeforeTransition: OnBeforeTransition,
+ *  onAfterTransition: OnAfterTransition,
+ *  nextState: any,
+ * }}
+ */
+
+/**
+ * @callback TransitionRouter
+ * @param {TransitionContext} transitionContext
+ * @param {TransitionExtraContext} transitionExtraContext
+ * @returns {void}
+ */
+
+/**
+ * @callback TransitionTo
+ * @param {TransitionExtraContext} transitionExtraContext
+ */
+
+/**
+ * @typedef {Object} TransitionContext
+ * @property {OnBeforeTransition} onBeforeTransition 
+ * @property {OnAfterTransition} onAfterTransition
+ * @property {SharedValue} state
+ * @property {SharedValue} counter
+ * @property {TransitionHandler} transitionHandler
+ */
+
+/**
+ * @typedef {import('react').RefObject<{
+ *  state: SharedValue,
+ *  counter: SharedValue,
+ *  timeout: SharedValue,
+ *  transitionTo: TransitionTo,
+ * }>} TimerRef
+ */
+
+/**
+ * @callback TimingHandler
+ * @param {{
+ *  timingInterval: any,
+ *  state: SharedValue,
+ *  counter: SharedValue,
+ *  timeout: SharedValue,
+ *  timerRef: TimerRef,
+ * }}
+ */
+
+/**
+ * @callback RemoveTiming
+ * @param {SharedValue} timeout
+ * @returns {void}
+ */
+
+/**
+ * @typedef {NamedStyles<{
+ *  container?: AnyStyle,
+ *  place?: AnyStyle,
+ *  digit?: AnyStyle,
+ * }> & Record<string, AnyStyle>} Styles
+ */
+
+/**
+ * @callback Render
+ * @param {SharedValue} counter 
+ * @param {any} timingInterval
+ * @param {any} initialCounterValue
+ * @param {Styles} style
+ * @returns {ReactNode}
+ */
+
+/**
+ * @typedef {Object} CounterProps
  * @property {any} initialState
  * @property {any} initialCounterValue
- * @property {function} onBeforeTransition
- * @property {function} onAfterTransition
- * @property {function} render
- * @property {React.Ref} timerRef
- * @property {function} timingHandler
+ * @property {OnBeforeTransition} onBeforeTransition
+ * @property {OnAfterTransition} onAfterTransition
+ * @property {Render} render
+ * @property {TimerRef} timerRef
+ * @property {TimingHandler} timingHandler
  * @property {any} timingInterval
- * @property {function} removeTiming
- * @property {function} transitionHandler
- * @property {any} style
- * 
- * @param {CounterProps} props 
- * @returns {JSX.Element}
+ * @property {RemoveTiming} removeTiming
+ * @property {TransitionHandler} transitionHandler
+ * @property {TransitionRouter} transitionRouter
+ * @property {Styles} style
  */
 
 /**
- * @typedef {function} onBeforeTransition
- * @param {counter} counter 
- */
-
-/**
- * 
- */
-
-/**
- * 
- */
-
-/**
- * 
- */
-
-/**
- * 
- */
-
-/**
- * 
- */
-
-/**
- * 
+ * @callback Counter
+ * @param {CounterProps} props
+ * @returns {ReactNode}
  */

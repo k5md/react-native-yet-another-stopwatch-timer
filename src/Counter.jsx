@@ -20,9 +20,12 @@ export const CounterDefaults = (() => {
     if (shouldInterrupt) return;
     if (transition.onBeforeTransition) shouldInterrupt = transition.onBeforeTransition(transitionContext, transitionExtraContext, transition);
     if (shouldInterrupt) return;
+    if (transitionExtraContext?.onBeforeTransition) shouldInterrupt = transitionExtraContext.onBeforeTransition(transitionContext, transitionExtraContext, transition);
+    if (shouldInterrupt) return;
     transitionContext.state.value = transition.nextState;
     if (transition.onAfterTransition) transition.onAfterTransition(transitionContext, transitionExtraContext, transition);
     transitionContext.onAfterTransition?.(transitionContext, transitionExtraContext, transition);
+    transitionExtraContext.onAfterTransition?.(transitionContext, transitionExtraContext, transition);
   };
   return { transitionRouter };
 })();
@@ -52,8 +55,8 @@ export const Counter = ({
 
   useImperativeHandle(timerRef, () => {
     const transitionContext = { onBeforeTransition, onAfterTransition, state, counter, transitionHandler };
-    const transition = transitionRouter.bind(null, transitionContext);
-    return { state, counter, timeout, transition };
+    const transitionTo = transitionRouter.bind(null, transitionContext);
+    return { state, counter, timeout, transitionTo };
   }, [ onBeforeTransition, onAfterTransition, state, counter, timeout, transitionHandler, transitionRouter ]);
   
   return (

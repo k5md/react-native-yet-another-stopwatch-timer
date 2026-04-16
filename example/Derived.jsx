@@ -15,10 +15,10 @@ export default () => {
 
   const initialTimerValue = 10 * 60 * 60 * 99;
 
-  const playPause = useCallback(() => timerRef.current?.transition({
+  const playPause = useCallback(() => timerRef.current?.transitionTo({
     name: timerRef.current.state.value === TimerStates.Running ? TimerTransitions.Pause : TimerTransitions.Run,
   }), [ timerRef ]);
-  const reset = useCallback(() => timerRef.current?.transition({
+  const reset = useCallback(() => timerRef.current?.transitionTo({
     name: TimerTransitions.Reset,
     counterValue: initialTimerValue,
   }), [ timerRef ]);

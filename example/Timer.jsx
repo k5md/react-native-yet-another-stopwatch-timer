@@ -18,12 +18,12 @@ export default () => {
   const runPause = useCallback(() => {
     if (!timerRef.current) return;
     if (timerRef.current.state.value === TimerStates.Running) {
-      timerRef.current.transition({ name: TimerTransitions.Pause });
+      timerRef.current.transitionTo({ name: TimerTransitions.Pause });
     } else {
-      timerRef.current.transition({ name: TimerTransitions.Run, counterValue: initialTimerValue });
+      timerRef.current.transitionTo({ name: TimerTransitions.Run, counterValue: initialTimerValue });
     }
   }, [ timerRef ]);
-  const reset = useCallback(() => timerRef.current?.transition({
+  const reset = useCallback(() => timerRef.current?.transitionTo({
     name: TimerTransitions.Reset, 
     counterValue: initialTimerValue,
   }), [ timerRef ]);
