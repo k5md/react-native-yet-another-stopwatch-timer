@@ -15,7 +15,7 @@ export default () => {
 
   const initialTimerValue = 10 * 60 * 60 * 99;
 
-  const playPause = useCallback(() => timerRef.current?.transitionTo({
+  const runPause = useCallback(() => timerRef.current?.transitionTo({
     name: timerRef.current.state.value === TimerStates.Running ? TimerTransitions.Pause : TimerTransitions.Run,
   }), [ timerRef ]);
   const reset = useCallback(() => timerRef.current?.transitionTo({
@@ -31,7 +31,7 @@ export default () => {
       <View style={styles.container}>
         <Text>Derived</Text>
         <View style={[ styles.container, styles.text ]}>
-          <Button label="Play/Pause" onPress={playPause} />
+          <Button label="Run/Pause" onPress={runPause} />
           <Button label="Reset" onPress={reset} />
         </View>
         <Timer

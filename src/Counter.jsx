@@ -15,17 +15,26 @@ export const CounterDefaults = (() => {
   const transitionRouter = (transitionContext, transitionExtraContext) => {
     const transition = transitionContext.transitionHandler(transitionContext, transitionExtraContext);
     if (!transition) return;
-    let shouldInterrupt = false;
-    if (transitionContext?.onBeforeTransition) shouldInterrupt = transitionContext.onBeforeTransition(transitionContext, transitionExtraContext, transition);
-    if (shouldInterrupt) return;
-    if (transition.onBeforeTransition) shouldInterrupt = transition.onBeforeTransition(transitionContext, transitionExtraContext, transition);
-    if (shouldInterrupt) return;
-    if (transitionExtraContext?.onBeforeTransition) shouldInterrupt = transitionExtraContext.onBeforeTransition(transitionContext, transitionExtraContext, transition);
-    if (shouldInterrupt) return;
+    const beforeTransitionHandlers = [
+      transition.onBeforeTransition,
+      transitionExtraContext.onBeforeTransition,
+      transitionContext.onBeforeTransition,
+    ];
+    for (const handler of beforeTransitionHandlers) {
+      if (!handler) continue;
+      const shouldInterrupt = handler(transitionContext, transitionExtraContext, transition);
+      if (shouldInterrupt) return;
+    }
     transitionContext.state.value = transition.nextState;
-    if (transition.onAfterTransition) transition.onAfterTransition(transitionContext, transitionExtraContext, transition);
-    transitionContext.onAfterTransition?.(transitionContext, transitionExtraContext, transition);
-    transitionExtraContext.onAfterTransition?.(transitionContext, transitionExtraContext, transition);
+    const afterTransitionHandlers = [
+      transition.onAfterTransition,
+      transitionExtraContext.onAfterTransition,
+      transitionContext.onAfterTransition,
+    ];
+    for (const handler of afterTransitionHandlers) {
+      if (!handler) continue;
+      handler(transitionContext, transitionExtraContext, transition);
+    }
   };
   return { transitionRouter };
 })();

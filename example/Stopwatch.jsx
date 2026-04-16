@@ -15,7 +15,7 @@ export default () => {
 
   const runPause = useCallback(() => { 
     if (!timerRef.current) return;
-    timerRef.current.transition({
+    timerRef.current.transitionTo({
       name: timerRef.current.state.value === StopwatchStates.Running ? StopwatchTransitions.Pause : StopwatchTransitions.Run,
     });
   }, [ timerRef ]);

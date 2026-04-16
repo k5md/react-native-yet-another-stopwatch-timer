@@ -11,7 +11,7 @@ export const TimerDefaults = (() => {
     const decrementCounter = () => {
       if (state.value === StopwatchStates.Running) {
         if (counter.value > 0) counter.value -= 1;
-        if (counter.value < 1) runOnJS(timerRef.current.transition)({ name: StopwatchTransitions.Stop });
+        if (counter.value < 1) runOnJS(timerRef.current.transitionTo)({ name: StopwatchTransitions.Stop });
       }
       timeout.value = setTimeout(decrementCounter, timingInterval);
     }
