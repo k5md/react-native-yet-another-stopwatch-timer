@@ -4,6 +4,9 @@ import Animated, { useDerivedValue, useAnimatedProps } from 'react-native-reanim
 import Place from './Place';
 import { getMinutes, getSeconds, getDeciseconds } from './utils';
 
+/** @typedef {import('./types').Render} Types.Render */
+
+/** @type {Types.Render} Render each digit of counter value as individual Place component with Text separators */
 export const Individual = ({ counter, timingInterval, style }) => {
   const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(timingInterval, counter.value) / 10) % 10);
   const minutesOnes = useDerivedValue(() => getMinutes(timingInterval, counter.value) % 10);
@@ -13,19 +16,20 @@ export const Individual = ({ counter, timingInterval, style }) => {
 
   return (
     <>
-      <Place value={minutesTenths} style={style} />
-      <Place value={minutesOnes} style={style} />
+      <Place digit={minutesTenths} style={style} />
+      <Place digit={minutesOnes} style={style} />
       <Text style={[ style?.digit, style?.place ]}>:</Text>
-      <Place value={secondsTenths} style={style} />
-      <Place value={secondsOnes} style={style} />
+      <Place digit={secondsTenths} style={style} />
+      <Place digit={secondsOnes} style={style} />
       <Text style={[ style?.digit, style?.place ]}>.</Text>
-      <Place value={deciseconds} style={style} />
+      <Place digit={deciseconds} style={style} />
     </>
   );
 };
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
+/** @type {Types.Render} Render counter value as one animated TextInput */
 export const Group = ({ counter, timingInterval, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
@@ -40,6 +44,7 @@ export const Group = ({ counter, timingInterval, style }) => {
   );
 };
 
+/** @type {Types.Render} Render counter value as a regular Text */
 export const State = ({ counter, timingInterval, style }) => {
   const minutes = getMinutes(timingInterval, counter);
   const seconds = getSeconds(timingInterval, counter);

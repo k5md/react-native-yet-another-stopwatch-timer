@@ -2,7 +2,9 @@ import React, { useEffect, useImperativeHandle } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { runOnUI } from 'react-native-worklets';
-import './types';
+
+/** @typedef {import('./types').TransitionRouter} Types.TransitionRouter */
+/** @typedef {import('./types').Counter} Types.Counter */
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export const CounterDefaults = (() => {
+  /** @type {Types.TransitionRouter} */
   const transitionRouter = (transitionContext, transitionExtraContext) => {
     const transition = transitionContext.transitionHandler(transitionContext, transitionExtraContext);
     if (!transition) return;
@@ -39,6 +42,7 @@ export const CounterDefaults = (() => {
   return { transitionRouter };
 })();
 
+/** @type {Types.Counter} */
 export const Counter = ({
   initialState,
   initialCounterValue,

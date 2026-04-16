@@ -2,7 +2,7 @@
 
 /** @typedef {import('react').ReactNode} ReactNode */
 
-/**@typedef {import('../example/node_modules/react-native').ViewStyle | import('../example/node_modules/react-native').TextStyle | import('../example/node_modules/react-native').ImageStyle} AnyStyle */
+/** @typedef {import('../example/node_modules/react-native').ViewStyle | import('../example/node_modules/react-native').TextStyle | import('../example/node_modules/react-native').ImageStyle} AnyStyle */
 
 /**
  * @template T
@@ -18,10 +18,18 @@
  */
 
 /**
+ * @typedef {{
+ *  onBeforeTransition?: OnBeforeTransition,
+ *  onAfterTransition?: OnAfterTransition,
+ *  nextState?: any,
+ * }} Transition
+*/
+
+/**
  * @callback OnBeforeTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
- * @param {any} transition
+ * @param {Transition} transition
  * @returns {bool} shouldInterrupt flag, if true transition won't happen
  */
 
@@ -37,11 +45,7 @@
  * @callback TransitionHandler
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
- * @returns {{
- *  onBeforeTransition: OnBeforeTransition,
- *  onAfterTransition: OnAfterTransition,
- *  nextState: any,
- * }}
+ * @returns {Transition | void }
  */
 
 /**
@@ -54,6 +58,7 @@
 /**
  * @callback TransitionTo
  * @param {TransitionExtraContext} transitionExtraContext
+ * @returns {void}
  */
 
 /**
@@ -129,3 +134,30 @@
  * @param {CounterProps} props
  * @returns {ReactNode}
  */
+
+/**
+ * @typedef {Object} DigitProps
+ * @property {SharedValue} assignedDigit
+ * @property {number} actualDigit
+ * @property {Styles} style
+ */
+
+/**
+ * @callback Digit
+ * @param {DigitProps} props
+ * @returns {ReactNode}
+ */
+
+/**
+ * @typedef {Object} PlaceProps
+ * @property {SharedValue} digit
+ * @property {Styles} style
+ */
+
+/**
+ * @callback Place
+ * @param {PlaceProps} props
+ * @returns {ReactNode}
+ */
+
+export {};

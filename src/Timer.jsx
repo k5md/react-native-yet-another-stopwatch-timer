@@ -2,10 +2,14 @@ import React from 'react';
 import Stopwatch, { StopwatchStates, StopwatchTransitions } from './Stopwatch';
 import { runOnJS } from 'react-native-worklets';
 
+/** @typedef {import('./types').TimingHandler} Types.TimingHandler */
+/** @typedef {import('./types').Counter} Types.Counter */
+
 export { StopwatchStates as TimerStates };
 export { StopwatchTransitions as TimerTransitions };
 
 export const TimerDefaults = (() => {
+  /** @type {Types.TimingHandler} */
   const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout, timerRef }) {
     'worklet';
     const decrementCounter = () => {
@@ -20,6 +24,7 @@ export const TimerDefaults = (() => {
   return { timingHandler };
 })();
 
+/** @type {Types.Counter} */
 export const Timer = ({
   timingHandler = TimerDefaults.timingHandler,
   ...props

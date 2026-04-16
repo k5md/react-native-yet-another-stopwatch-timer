@@ -2,6 +2,11 @@ import React from 'react';
 import Counter from './Counter';
 import Renderers from './Renderers';
 
+/** @typedef {import('./types').TimingHandler} Types.TimingHandler */
+/** @typedef {import('./types').RemoveTiming} Types.RemoveTiming */
+/** @typedef {import('./types').TransitionHandler} Types.TransitionHandler */
+/** @typedef {import('./types').Counter} Types.Counter */
+
 export const StopwatchStates = {
   Unset: 'Unset',
   Paused: 'Paused',
@@ -19,6 +24,7 @@ export const StopwatchTransitions = {
 export const StopwatchDefaults = (() => {
   const initialState = StopwatchStates.Unset;
   const initialCounterValue = 0;
+  /** @type {Types.TimingHandler} */
   const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout }) {
     'worklet';
     const incrementCounter = () => {
@@ -28,8 +34,10 @@ export const StopwatchDefaults = (() => {
     timeout.value = setTimeout(incrementCounter, timingInterval);
   };
   const timingInterval = 100;
+  /** @type {Types.RemoveTiming} */
   const removeTiming = (timeout) => clearTimeout(timeout.value);
   const setCounter = ({ counter }, { counterValue }) => counter.set(counterValue || 0);
+  /** @type {Types.TransitionHandler} */
   const transitionHandler = ({ state }, { name }) => {
     if (name === StopwatchTransitions.Reset) return { nextState: state.value, onBeforeTransition: setCounter };
     if (name === StopwatchTransitions.Pause && state.value === StopwatchStates.Running) return { nextState: StopwatchStates.Paused };
@@ -46,6 +54,7 @@ export const StopwatchDefaults = (() => {
   };
 })();
 
+/** @type {Types.Counter} */
 export const Stopwatch = ({
   initialState = StopwatchDefaults.initialState,
   initialCounterValue = StopwatchDefaults.initialCounterValue,

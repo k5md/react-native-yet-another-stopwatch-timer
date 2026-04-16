@@ -50,14 +50,14 @@ export default () => {
 
             return (
               <>
-                <Place value={hoursTenths} style={style} />
-                <Place value={hoursOnes} style={style} />
+                <Place digit={hoursTenths} style={style} />
+                <Place digit={hoursOnes} style={style} />
                 <Text style={[ style?.digit, style?.place ]}>:</Text>
-                <Place value={minutesTenths} style={style} />
-                <Place value={minutesOnes} style={style} />
+                <Place digit={minutesTenths} style={style} />
+                <Place digit={minutesOnes} style={style} />
                 <Text style={[ style?.digit, style?.place ]}>:</Text>
-                <Place value={secondsTenths} style={style} />
-                <Place value={secondsOnes} style={style} />
+                <Place digit={secondsTenths} style={style} />
+                <Place digit={secondsOnes} style={style} />
               </>
             )
           }}

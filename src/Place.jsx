@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Digit from './Digit';
 
+/** @typedef {import('./types').Place} Types.Place */
+
 const styles = StyleSheet.create({
   place: {
     position: 'relative',
@@ -11,10 +13,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Place = ({ value, style }) => {
-  const range = useMemo(() => Array.from({ length: 10 }, (_, numeral) => 
-    (<Digit key={numeral} numeral={numeral} value={value} style={[ numeral && styles.digit, style?.digit ]} />)
-  ), [ value, style ]);
+/** @type {Types.Place} */
+export const Place = ({ digit: actualDigit, style }) => {
+  const range = useMemo(() => Array.from({ length: 10 }, (_, assignedDigit) => 
+    (<Digit key={assignedDigit} assignedDigit={assignedDigit} actualDigit={actualDigit} style={[ assignedDigit && styles.digit, style?.digit ]} />)
+  ), [ actualDigit, style ]);
   return (<View style={[ styles.place, style?.place ]}>{range}</View>);
 };
 

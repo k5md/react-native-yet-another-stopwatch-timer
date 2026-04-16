@@ -1,17 +1,20 @@
 import React from 'react';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 
-export const Digit = ({ numeral, value, style }) => {
+/** @typedef {import('./types').Digit} Types.Digit */
+
+/** @type {Types.Digit} */
+export const Digit = ({ assignedDigit, actualDigit, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
     return {
-      opacity: value.get() === numeral ? 1 : 0,
+      opacity: actualDigit.get() === assignedDigit ? 1 : 0,
     };
   });
 
   return (
     <Animated.Text style={style} animatedProps={animatedProps}>
-      {numeral}
+      {assignedDigit}
     </Animated.Text>
   );
 };
