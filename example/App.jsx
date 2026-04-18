@@ -1,9 +1,9 @@
-import React from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import React from 'react';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import Stopwatch from './Stopwatch';
 import Timer from './Timer';
-import Derived from "./Derived";
-import Intervals from "./Intervals";
+import Derived from './Derived';
+import Intervals from './Intervals';
 
 const styles = StyleSheet.create({
   container: {

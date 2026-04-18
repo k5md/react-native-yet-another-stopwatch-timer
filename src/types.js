@@ -10,6 +10,10 @@
  */
 
 /**
+ * Additional context provided by transitionTo function, it is used to switch states depending on name property.
+ * 
+ * See example in [Stopwatch.StopwatchDefaults.transitionHandler](./Stopwatch.jsx)
+ * 
  * @typedef {{
  *   name: string,
  *   onBeforeTransition?: OnBeforeTransition,
@@ -18,13 +22,8 @@
  */
 
 /**
- * @typedef {Object & Record<string, any>} TransitionExtraContext
- * @property {string} name
- * @property {OnBeforeTransition} onBeforeTransition 
- * @property {OnAfterTransition} onAfterTransition
- */
-
-/**
+ * Description of next state, what to do before and after state change.
+ * 
  * @typedef {Object} Transition
  * @property {OnBeforeTransition} [onBeforeTransition]
  * @property {OnAfterTransition} [onAfterTransition]
@@ -32,6 +31,10 @@
 */
 
 /**
+ * Called before state change, use for managing side-effects.
+ * 
+ * Return truthy value to cancel state change and onBeforeTransition handlers calls of lower priority, order described in {@link TransitionRouter}.
+ * 
  * @callback OnBeforeTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -40,6 +43,10 @@
  */
 
 /**
+ * Called after state change, use for managing side-effects.
+ * 
+ * See example in [Stopwatch.jsx](./Stopwatch.jsx)
+ * 
  * @callback OnAfterTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -80,7 +87,13 @@
 /**
  * This function is used to switch timer state
  * 
- * Partially applied version of {@link TransitionRouter} with `transitionContext` argument pre-bound
+ * Partially applied version of {@link TransitionRouter} with `transitionContext` argument pre-bound,
+ * this function is intended to be the only way parent component interacts with counter,
+ * one does this by switching states. 
+ * 
+ * ```
+ * const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
+ * ```
  * 
  * @callback TransitionTo
  * @param {TransitionExtraContext} transitionExtraContext
@@ -89,7 +102,7 @@
 
 /**
  * @typedef {Object} TransitionContext
- * @property {OnBeforeTransition} onBeforeTransition 
+ * @property {OnBeforeTransition} onBeforeTransition
  * @property {OnAfterTransition} onAfterTransition
  * @property {SharedValue} state
  * @property {SharedValue} counter
@@ -150,12 +163,14 @@
 
 /**
  * @typedef {Object} StylesProps
- * @property {AnyStyle} [container]
- * @property {AnyStyle} [place]
- * @property {AnyStyle} [digit]
+ * @property {AnyStyle} [container] style for wrappers
+ * @property {AnyStyle} [place] style for {@link Place} component
+ * @property {AnyStyle} [digit] style for {@link Digit} component
 */
 
 /**
+ * Style overrides for component, this get passed to `render` function {@link Render}
+ * 
  * @typedef {NamedStyles<StylesProps> & Record<string, AnyStyle>} Styles
  */
 
@@ -183,14 +198,42 @@
  * @property {TimingHandler} timingHandler worker that updates counter value
  * @property {any} timingInterval intended time interval for timing handler to perform counter updates
  * @property {RemoveTiming} removeTiming clean up function
- * @property {TransitionHandler} transitionHandler 
- * @property {TransitionRouter} transitionRouter
- * @property {Styles} style
+ * @property {TransitionHandler} transitionHandler creates transition object based on provided transition name
+ * @property {TransitionRouter} [transitionRouter] calls transition handler and manages state value
+ * @property {Styles} [style] style overrides that get passed to render
  */
 
 /**
+ * Base component, binds state, counter and timeout properties to `transitionRouter` to provide means for changing state
+ * 
  * @callback Counter
  * @param {CounterProps} props
+ * @returns {ReactNode}
+ */
+
+/** @typedef { 'initialState' | 'initialCounterValue' | 'render' | 'timingHandler' | 'timingInterval' | 'removeTiming' | 'transitionHandler' | 'transitionRouter' } StopwatchDefaultedPropKeys */
+/** @typedef {Omit<CounterProps, StopwatchDefaultedPropKeys> & Partial<Pick<CounterProps, StopwatchDefaultedPropKeys>>} StopwatchProps */
+
+/**
+ * Stopwatch implementation
+ * 
+ * Provide timerRef and call transitionTo property to change state
+ * 
+ * @callback Stopwatch
+ * @param {StopwatchProps} props
+ * @returns {ReactNode}
+ */
+
+/** @typedef { 'timingHandler' } TimerDefaultedPropKeys */
+/** @typedef {Omit<StopwatchProps, TimerDefaultedPropKeys> & Partial<Pick<StopwatchProps, TimerDefaultedPropKeys>>} TimerProps */
+
+/**
+ * Timer implementation
+ * 
+ * Provide timerRef and call transitionTo property to change state
+ * 
+ * @callback Timer
+ * @param {TimerProps} props
  * @returns {ReactNode}
  */
 

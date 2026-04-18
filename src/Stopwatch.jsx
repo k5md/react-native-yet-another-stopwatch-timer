@@ -5,7 +5,7 @@ import Renderers from './Renderers';
 /** @typedef {import('./types').TimingHandler} Types.TimingHandler */
 /** @typedef {import('./types').RemoveTiming} Types.RemoveTiming */
 /** @typedef {import('./types').TransitionHandler} Types.TransitionHandler */
-/** @typedef {import('./types').Counter} Types.Counter */
+/** @typedef {import('./types').Stopwatch} Types.Stopwatch */
 
 export const StopwatchStates = {
   Unset: 'Unset',
@@ -54,32 +54,26 @@ export const StopwatchDefaults = (() => {
   };
 })();
 
-/** @type {Types.Counter} */
+/** @type {Types.Stopwatch} */
 export const Stopwatch = ({
   initialState = StopwatchDefaults.initialState,
   initialCounterValue = StopwatchDefaults.initialCounterValue,
-  onBeforeTransition,
-  onAfterTransition,
   render = Renderers.Group,
-  timerRef,
   timingHandler = StopwatchDefaults.timingHandler,
   timingInterval = StopwatchDefaults.timingInterval,
   removeTiming = StopwatchDefaults.removeTiming,
   transitionHandler = StopwatchDefaults.transitionHandler,
-  style,
+  ...rest
 }) => (
   <Counter
     initialState={initialState}
     initialCounterValue={initialCounterValue}
-    onBeforeTransition={onBeforeTransition}
-    onAfterTransition={onAfterTransition}
     render={render}
-    timerRef={timerRef}
     timingHandler={timingHandler}
     timingInterval={timingInterval}
     removeTiming={removeTiming}
     transitionHandler={transitionHandler}
-    style={style}
+    {...rest}
   />
 );
 

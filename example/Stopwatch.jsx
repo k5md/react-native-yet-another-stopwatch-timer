@@ -13,12 +13,9 @@ const timerStyles = StyleSheet.create({
 export default () => {
   const timerRef = useRef(null);
 
-  const runPause = useCallback(() => { 
-    if (!timerRef.current) return;
-    timerRef.current.transitionTo({
-      name: timerRef.current.state.value === StopwatchStates.Running ? StopwatchTransitions.Pause : StopwatchTransitions.Run,
-    });
-  }, [ timerRef ]);
+  const runPause = useCallback(() => timerRef.current?.transitionTo({
+    name: timerRef.current.state.value === StopwatchStates.Running ? StopwatchTransitions.Pause : StopwatchTransitions.Run,
+  }), [ timerRef ]);
   const stop = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Stop }), [ timerRef ]);
   const reset = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Reset }), [ timerRef ]);
 
