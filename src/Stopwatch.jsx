@@ -1,7 +1,6 @@
 import React from 'react';
 import Counter from './Counter';
 import Renderers from './Renderers';
-
 /** @typedef {import('./types').TimingHandler} Types.TimingHandler */
 /** @typedef {import('./types').RemoveTiming} Types.RemoveTiming */
 /** @typedef {import('./types').TransitionHandler} Types.TransitionHandler */
@@ -77,5 +76,5 @@ export const Stopwatch = ({
   />
 );
 
-/** @type {typeof Stopwatch} */
+/** @type {Types.Stopwatch} */
 export default Stopwatch;

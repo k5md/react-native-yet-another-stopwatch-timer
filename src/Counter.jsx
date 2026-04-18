@@ -79,5 +79,5 @@ export const Counter = ({
   );
 };
 
-/** @type {typeof Counter} */
+/** @type {Types.Counter} */
 export default Counter;

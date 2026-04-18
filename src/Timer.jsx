@@ -30,5 +30,5 @@ export const Timer = ({
   ...rest
 }) => (<Stopwatch timingHandler={timingHandler} {...rest} />);
 
-/**@type {typeof Timer} */
+/** @type {Types.Timer} */
 export default Timer;

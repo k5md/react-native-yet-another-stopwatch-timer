@@ -56,5 +56,5 @@ export const State = ({ counter, timingInterval, style }) => {
   );
 };
 
-/** @type {{ Individual: typeof Individual, Group: typeof Group, State: typeof State }} */
+/** @type {{ Individual: Types.Render, Group: Types.Render, State: Types.Render }} */
 export default { Individual, Group, State };
