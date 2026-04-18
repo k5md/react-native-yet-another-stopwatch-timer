@@ -9,7 +9,7 @@ Counter serves as base component.
 Stopwatch features are achieved by providing:
   - initialState for the state machine
   - timingHandler to increment the counter at least every timingInterval
-  - timingRemove to clean the timeout when the component is removed
+  - removeTiming to clean the timeout when the component is removed
   - transitionHandler that returns an object with nextState based on transition and current state
   - render function that returns a React component provided counter and style arguments
 Timer features are achieved by providing other timing function to Stopwatch that decrements the counter and issues a transition to stop state when it reaches zero.
@@ -40,7 +40,7 @@ Check out [example project](https://github.com/k5md/react-native-yet-another-sto
 | timerRef | React ref | placeholder |
 | timingHandler | function | placeholder |
 | timingInterval | any | placeholder |
-| timingRemove | function | placeholder |
+| removeTiming | function | placeholder |
 | transitionHandler | function | placeholder |
 | style | Stylesheet object | placeholder |
 
