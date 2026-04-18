@@ -1,12 +1,12 @@
-/** @typedef {import('../example/node_modules/react-native-reanimated').SharedValue<any>} SharedValue */
+/** @typedef {import('react-native-reanimated').SharedValue<any>} SharedValue */
 
 /** @typedef {import('react').ReactNode} ReactNode */
 
-/** @typedef {import('../example/node_modules/react-native').ViewStyle | import('../example/node_modules/react-native').TextStyle | import('../example/node_modules/react-native').ImageStyle} AnyStyle */
+/** @typedef {import('react-native').ViewStyle | import('react-native').TextStyle | import('react-native').ImageStyle} AnyStyle */
 
 /**
  * @template T
- * @typedef {import('../example/node_modules/react-native').StyleSheet.NamedStyles<T>} NamedStyles
+ * @typedef {import('react-native').StyleSheet.NamedStyles<T>} NamedStyles
  */
 
 /**
