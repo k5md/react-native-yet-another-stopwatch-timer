@@ -11,9 +11,9 @@ const Component = () => {
   const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
   return (
     <View>
-      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>,
-      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>,
-      <Stopwatch timerRef={timerRef} />,
+      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
+      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
+      <Stopwatch timerRef={timerRef} />
     </View>
   );
 };

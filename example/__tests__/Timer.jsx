@@ -13,8 +13,8 @@ const Component = ({ initialCounterValue }) => {
   }, [ laps, setLaps ]);
   return (
     <View>
-      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>,
-      <Timer timerRef={timerRef} onAfterTransition={onAfterTransition} initialCounterValue={initialCounterValue} />,
+      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
+      <Timer timerRef={timerRef} onAfterTransition={onAfterTransition} initialCounterValue={initialCounterValue} />
       <Text>Laps: {laps}</Text>
     </View>
   );

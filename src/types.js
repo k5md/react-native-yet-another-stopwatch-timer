@@ -101,6 +101,9 @@
  */
 
 /**
+ * Context provided and captured from {@link Counter}, containing handlers passed as props to component, state and
+ * counter.
+ * 
  * @typedef {Object} TransitionContext
  * @property {OnBeforeTransition} onBeforeTransition
  * @property {OnAfterTransition} onAfterTransition
@@ -217,7 +220,31 @@
 /**
  * Stopwatch implementation
  * 
- * Provide timerRef and call transitionTo property to change state
+ * {@link Counter} provided with defaults to act as a stopwatch. Use {@link TimerRef|timerRef} and call `timerRef.current?.transitionTo` to change `state`.
+ * By default `counter` increments every 100 ms, time is rendered in mm:ss.d format. Provide custom {@link Render|render} property defining animated values derived
+ * from counter to get hours, days etc, or use one of predefined [renderers](./Renderers.jsx). For higher granularity, change `timingInterval` in ms,
+ * it defines how often {@link TimingHandler|timingHandler} is called that changes counter value.
+ * For better precision use `onBeforeTransition` and `onAfterTransition` properties, or provide custom self-adjusting `timingHandler`.
+ * 
+ * ```
+ * import React, { useRef, useCallback } from 'react';
+ * import { View, TouchableOpacity, Text } from 'react-native';
+ * import { Stopwatch, StopwatchTransitions, StopwatchStates } from 'react-native-yet-another-stopwatch-timer';
+ * const Component = () => {
+ *  const timerRef = useRef(null);
+ *  // use timerRef to call transitionTo property to switch states
+ *  const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
+ *  // use onBeforeTransition, onAfterTransition callback to access counter on state change
+ *  const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
+ *  return (
+ *    <View>
+ *      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
+ *      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
+ *      <Stopwatch timerRef={timerRef} />
+ *    </View>
+ *  );
+ * };
+ * ```
  * 
  * @callback Stopwatch
  * @param {StopwatchProps} props
@@ -230,7 +257,33 @@
 /**
  * Timer implementation
  * 
- * Provide timerRef and call transitionTo property to change state
+ * {@link Stopwatch} provided with custom `timingHandler` to act as a timer. Use {@link TimerRef|timerRef} and call `timerRef.current?.transitionTo` to change `state`.
+ * By default `counter` decrements every 100 ms, time is rendered in mm:ss.d format. Provide custom {@link Render|render} property defining animated values derived
+ * from counter to get hours, days etc, or use one of predefined [renderers](./Renderers.jsx). For higher granularity, change `timingInterval` in ms,
+ * it defines how often {@link TimingHandler|timingHandler} is called that changes counter value.
+ * For better precision use `onBeforeTransition` and `onAfterTransition` properties, or provide custom self-adjusting `timingHandler`.
+ * 
+ * ```
+ * import React, { useState, useRef, useCallback } from 'react';
+ * import { View, TouchableOpacity, Text } from 'react-native';
+ * import { Timer, TimerTransitions, TimerStates } from 'react-native-yet-another-stopwatch-timer';
+ * const Component = ({ initialCounterValue }) => {
+ *  const [ laps, setLaps ] = useState(0);
+ *  const timerRef = useRef(null);
+ *  // use timerRef to call transitionTo property to switch states, set transition name to one of StopwatchTransitions, counterValue if you want to change it outside of timingHandler
+ *  const run = useCallback(() => timerRef.current?.transitionTo({ name: TimerTransitions.Run, counterValue: initialCounterValue }), [ timerRef ]);
+ *  const onAfterTransition = useCallback(({ state }) => {
+ *    if (state.value === TimerStates.Stopped) setLaps((laps) => laps + 1);
+ *  }, [ laps, setLaps ]);
+ *  return (
+ *    <View>
+ *      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
+ *      <Timer timerRef={timerRef} onAfterTransition={onAfterTransition} initialCounterValue={initialCounterValue} />
+ *      <Text>Laps: {laps}</Text>
+ *    </View>
+ *  );
+ * };
+ * ```
  * 
  * @callback Timer
  * @param {TimerProps} props
