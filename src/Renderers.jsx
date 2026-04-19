@@ -46,7 +46,7 @@ export const Group = ({ counter, timingInterval, style }) => {
 };
 
 /** @type {Types.Render} */
-export const State = ({ counter, timingInterval, style }) => {
+export const Static = ({ counter, timingInterval, style }) => {
   const minutes = getMinutes(timingInterval, counter);
   const seconds = getSeconds(timingInterval, counter);
   const deciseconds = getDeciseconds(timingInterval, counter);
@@ -58,6 +58,6 @@ export const State = ({ counter, timingInterval, style }) => {
 };
 
 /** @type {Types.Renderers} */
-const Renderers = { Individual, Group, State };
+const Renderers = { Individual, Group, Static };
 
 export default Renderers;

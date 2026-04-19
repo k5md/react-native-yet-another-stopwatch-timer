@@ -13,7 +13,7 @@ const timerStyles = StyleSheet.create({
 const Lap = ({ value }) => {
   return (
     <Animated.View style={{ flex: 1, flexDirection: 'row' }}>
-      {Renderers.State({ counter: value, timingInterval: StopwatchDefaults.timingInterval })}
+      {Renderers.Static({ counter: value, timingInterval: StopwatchDefaults.timingInterval })}
     </Animated.View>
   );
 }

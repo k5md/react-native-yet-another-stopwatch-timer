@@ -5,6 +5,8 @@ import Renderers from './Renderers';
 /** @typedef {import('./types').RemoveTiming} Types.RemoveTiming */
 /** @typedef {import('./types').TransitionHandler} Types.TransitionHandler */
 /** @typedef {import('./types').Stopwatch} Types.Stopwatch */
+/** @typedef {import('./types').Render} Types.Render */
+/** @typedef {import('./types').Renderers} Types.Renderers */
 
 export const StopwatchStates = {
   Unset: 'Unset',
@@ -53,8 +55,37 @@ export const StopwatchDefaults = (() => {
   };
 })();
 
-/** @type {Types.Stopwatch} */
-export const Stopwatch = ({
+/**
+ * Stopwatch implementation
+ * 
+ * {@link Counter} provided with defaults to act as a stopwatch. Use {@link Types.TimerRef|timerRef} and call `timerRef.current?.transitionTo` to change `state`.
+ * By default `counter` increments every 100 ms, time is rendered in mm:ss.d format. Provide custom {@link Types.Render|render} property defining animated values derived
+ * from counter to get hours, days etc, or use one of predefined {@link Types.Renderers|Renderers}. For higher granularity, change `timingInterval` in ms,
+ * it defines how often {@link Types.TimingHandler|timingHandler} is called that changes counter value.
+ * For better precision use `onBeforeTransition` and `onAfterTransition` properties, or provide custom self-adjusting `timingHandler`.
+ * 
+ * ```
+ * import React, { useRef, useCallback } from 'react';
+ * import { View, TouchableOpacity, Text } from 'react-native';
+ * import { Stopwatch, StopwatchTransitions, StopwatchStates } from 'react-native-yet-another-stopwatch-timer';
+ * const Component = () => {
+ *  const timerRef = useRef(null);
+ *  // use timerRef to call transitionTo property to switch states
+ *  const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
+ *  // use onBeforeTransition, onAfterTransition callback to access counter on state change
+ *  const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
+ *  return (
+ *    <View>
+ *      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
+ *      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
+ *      <Stopwatch timerRef={timerRef} />
+ *    </View>
+ *  );
+ * };
+ * ```
+ * @type {Types.Stopwatch}
+ */
+const Stopwatch = ({
   initialState = StopwatchDefaults.initialState,
   initialCounterValue = StopwatchDefaults.initialCounterValue,
   render = Renderers.Group,
@@ -76,5 +107,5 @@ export const Stopwatch = ({
   />
 );
 
-/** @type {Types.Stopwatch} */
+export { Stopwatch };
 export default Stopwatch;
