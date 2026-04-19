@@ -55,7 +55,7 @@
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
  * @param {any} transition
- * @returns {boolean | void} shouldInterrupt flag, if true transition won't happen
+ * @returns {void}
  */
 
 /**
