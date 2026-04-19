@@ -191,6 +191,13 @@
  */
 
 /**
+ * @typedef {Object} Renderers
+ * @property {Render} Individual Renders each digit of counter value as individual Place component with Text separators
+ * @property {Render} Group Renders counter value as one animated TextInput
+ * @property {Render} State Renders counter value as a regular Text
+*/
+
+/**
  * @typedef {Object} CounterProps
  * @property {any} initialState initial value for state
  * @property {any} initialCounterValue initial value for counter
