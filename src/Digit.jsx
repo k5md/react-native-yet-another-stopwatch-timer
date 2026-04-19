@@ -8,7 +8,7 @@ export const Digit = ({ assignedDigit, actualDigit, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
     return {
-      opacity: actualDigit.get() === assignedDigit ? 1 : 0,
+      opacity: actualDigit.value === assignedDigit ? 1 : 0,
     };
   });
 

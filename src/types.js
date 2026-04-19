@@ -2,7 +2,7 @@
 
 /** @typedef {import('react').ReactNode} ReactNode */
 
-/** 
+/**
  * @template T
  * @typedef {import('react').RefObject<T>} RefObject
  */
@@ -15,19 +15,20 @@
  */
 
 /**
- * Additional context provided by transitionTo function, it is used to switch states depending on name property.
- * 
- * See example in [Stopwatch.StopwatchDefaults.transitionHandler](./Stopwatch.jsx)
- * 
- * @typedef {{
- *   name: string,
- *   onBeforeTransition?: OnBeforeTransition,
- *   onAfterTransition?: OnAfterTransition,
- * } & Record<string, any>} TransitionExtraContext
+ * @typedef {Object} TransitionExtraContextProps
+ * @property {string} name - transition name, used to route and create correct transition object in transitionHandler
+ * @property {OnBeforeTransition} [onBeforeTransition]
+ * @property {OnAfterTransition} [onAfterTransition]
  */
 
 /**
- * Description of next state, what to do before and after state change.
+ * Additional context provided by transitionTo function, it is used to switch states depending on name property
+ * 
+ * @typedef {TransitionExtraContextProps & Object} TransitionExtraContext
+ */
+
+/**
+ * Description of next state, what to do before and after state change
  * 
  * @typedef {Object} Transition
  * @property {OnBeforeTransition} [onBeforeTransition]
@@ -36,7 +37,7 @@
 */
 
 /**
- * Called before state change, use for managing side-effects.
+ * Called before state change, use for managing side-effects
  * 
  * Return truthy value to cancel state change and onBeforeTransition handlers calls of lower priority, order described in {@link TransitionRouter}.
  * 
@@ -50,8 +51,6 @@
 /**
  * Called after state change, use for managing side-effects.
  * 
- * See example in [Stopwatch.jsx](./Stopwatch.jsx)
- * 
  * @callback OnAfterTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -60,11 +59,9 @@
  */
 
 /**
- * Produces object describing changes based on `transitionExtraContext.name`: next state, what to do before and after state change.
+ * Produces object describing changes based on `transitionExtraContext.name`: next state, what to do before and after state change
  * 
  * If this function returns falsy, then state value won't get changed, no `onBeforeTransition` and no `onAfterTransition` handlers will get called.
- * 
- * See example in [Stopwatch.StopwatchDefaults.transitionHandler](./Stopwatch.jsx)
  * 
  * @callback TransitionHandler
  * @param {TransitionContext} transitionContext
@@ -73,7 +70,8 @@
  */
 
 /**
- * Manages state value after routing.
+ * Manages state value after routing
+ * 
  * This function calls `transitionContext.transitionHandler` to get {@link Transition} object to change from current state to next,
  * calls `onBeforeTransition` callbacks in the following order:
  * 1. property of `transitionTo` argument, passed when calling `transitionTo` from `timerRef.current` {@link TransitionTo}
@@ -95,7 +93,6 @@
  * Partially applied version of {@link TransitionRouter} with `transitionContext` argument pre-bound,
  * this function is intended to be the only way parent component interacts with counter,
  * one does this by switching states. 
- * 
  * ```
  * const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
  * ```
@@ -107,7 +104,7 @@
 
 /**
  * Context provided and captured from {@link Counter}, containing handlers passed as props to component, state and
- * counter.
+ * counter
  * 
  * @typedef {Object} TransitionContext
  * @property {OnBeforeTransition} onBeforeTransition
@@ -129,14 +126,12 @@
  * Handle to control timer
  * 
  * Used to provide transitionTo function to switch state, this function is intended to be the only way parent component
- * interacts with timer
- * 
+ * interacts with timer.
  * ```
  * const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
  * ```
  * 
- * The ref is also passed to {@link TimingHandler} to switch state when counter reaches certain values,
- * see example in [Timer.TimerDefaults.timingHandler](./Timer.jsx)
+ * The ref is also passed to {@link TimingHandler} to switch state when counter reaches certain values.
  * 
  * @typedef {RefObject<TimerRefProps>} TimerRef
  */
@@ -145,8 +140,20 @@
  * Timing worklet that runs on UI-thread for updating counter and schedules a recursive call to itself
  * 
  * It should change counter value based on current state every timingInterval and update timeout shared variable
- * so that whenever component gets rerendered, removeTiming could perform a clean up,
- * see example in [Stopwatch.StopwatchDefaults.timingHandler](./Stopwatch.jsx)
+ * so that whenever component gets rerendered, removeTiming could perform a clean up.
+ * ```
+ * const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout, timerRef }) {
+ *  'worklet';
+ *  const decrementCounter = () => {
+ *      if (state.value === StopwatchStates.Running) {
+ *          if (counter.value > 0) counter.value -= 1;
+ *          if (counter.value < 1) runOnJS(timerRef.current.transitionTo)({ name: StopwatchTransitions.Stop });
+ *      }
+ *      timeout.value = setTimeout(decrementCounter, timingInterval);
+ *  }
+    timeout.value = setTimeout(decrementCounter, timingInterval);
+  };
+ * ```
  * 
  * @callback TimingHandler
  * @param {Object} context
@@ -162,7 +169,7 @@
  * 
  * It must perform cleanup for whatever repeating timeout logic one uses in timingHandler
  * (e.g. if setTimeout is used, then it has to call clearTimeout), use timeout shared variable in timingHandler to
- * pass current timeout identifier, see example in [Stopwatch.StopwatchDefaults.removeTiming](./Stopwatch.jsx)
+ * pass current timeout identifier.
  * 
  * @callback RemoveTiming
  * @param {SharedValue} timeout Identifier set by timingHandler
@@ -185,7 +192,7 @@
 /**
  * Counter render function presents counter value as {@link ReactNode} and is passed to base component {@link Counter}
  * 
- * One can provide their custom function or use already implemented ones in [Renderers.jsx](./Renderers.jsx)
+ * One can provide their custom function or use already implemented ones in {@link Renderers}.
  * 
  * @callback Render
  * @param {SharedValue} counter 
@@ -206,8 +213,8 @@
  * @typedef {Object} CounterProps
  * @property {any} initialState initial value for state
  * @property {any} initialCounterValue initial value for counter
- * @property {OnBeforeTransition} onBeforeTransition will be called before state changes, can cancel transition
- * @property {OnAfterTransition} onAfterTransition will be called after state change
+ * @property {OnBeforeTransition} [onBeforeTransition] will be called before state changes, can cancel transition
+ * @property {OnAfterTransition} [onAfterTransition] will be called after state change
  * @property {Render} render custom render function for counter value
  * @property {TimerRef} timerRef the intended handle to perform state transitions
  * @property {TimingHandler} timingHandler worker that updates counter value

@@ -29,7 +29,7 @@ export const StopwatchDefaults = (() => {
   const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout }) {
     'worklet';
     const incrementCounter = () => {
-      if (state.value === StopwatchStates.Running) counter.value = (counter.value + 1) % 36000;
+      if (state.value === StopwatchStates.Running) counter.value = (counter.value + 1) % Number.MAX_SAFE_INTEGER;
       timeout.value = setTimeout(incrementCounter, timingInterval);
     }
     timeout.value = setTimeout(incrementCounter, timingInterval);
@@ -37,7 +37,9 @@ export const StopwatchDefaults = (() => {
   const timingInterval = 100;
   /** @type {Types.RemoveTiming} */
   const removeTiming = (timeout) => clearTimeout(timeout.value);
-  const setCounter = ({ counter }, { counterValue }) => counter.set(counterValue || 0);
+  const setCounter = ({ counter }, { counterValue }) => {
+    counter.value = counterValue || 0;
+  }
   /** @type {Types.TransitionHandler} */
   const transitionHandler = ({ state }, { name }) => {
     if (name === StopwatchTransitions.Reset) return { nextState: state.value, onBeforeTransition: setCounter };
