@@ -15,9 +15,8 @@
     "src"
   ],
   "scripts": {
-    "lint": "eslint ./ --ignore-path .gitignore",
-    "lint:fix": "npm run lint -- --fix",
-    "semantic-release": "semantic-release"
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -34,5 +33,11 @@
   "bugs": {
     "url": "https://github.com/k5md/react-native-yet-another-stopwatch-timer/issues"
   },
-  "homepage": "https://github.com/k5md/react-native-yet-another-stopwatch-timer#readme"
+  "homepage": "https://github.com/k5md/react-native-yet-another-stopwatch-timer#readme",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.6",
+    "@react-native/babel-preset": "^0.85.2",
+    "@react-native/eslint-config": "^0.85.2",
+    "eslint": "^8.57.0"
+  }
 }

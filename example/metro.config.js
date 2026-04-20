@@ -21,9 +21,13 @@ const config = {
   },
 
   resolver: {
-    blockList: [
-      new RegExp(`^${path.resolve(__dirname, '..', 'node_modules')}/.*$`),
-    ],
+    /*
+      NOTE: if parent project has any regular dependencies that have to be included,
+      this RegExp will block them, use only if parent project has only peer and dev dependencies
+    */
+    blockList: new RegExp(
+      `^${path.resolve(__dirname, '..', 'node_modules').replace(/[/\\\\]/g, '[/\\\\]')}.*`
+    ),
     extraNodeModules: new Proxy(
       {},
       {
@@ -31,7 +35,7 @@ const config = {
           if (target.hasOwnProperty(name)) {
             return target[name];
           }
-          return path.join(process.cwd(), `node_modules/${name}`);
+          return path.resolve(__dirname, 'node_modules', name);
         },
       },
     ),
