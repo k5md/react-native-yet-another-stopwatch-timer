@@ -7,16 +7,16 @@ module.exports = {
   ],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': [
-      'babel-jest', 
+      'babel-jest',
       { configFile: './babel.config.js' },
     ],
   },
   moduleDirectories: [
-    'node_modules', 
+    'node_modules',
     path.resolve(__dirname, 'node_modules'),
   ],
   transformIgnorePatterns: [
-    "node_modules/(?!(react-native|@react-native|react-native-reanimated|react-native-worklets)/)"
+    'node_modules/(?!(react-native|@react-native|react-native-reanimated|react-native-worklets)/)'
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   resolver: 'react-native-worklets/jest/resolver',

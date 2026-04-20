@@ -31,7 +31,7 @@ export const StopwatchDefaults = (() => {
     const incrementCounter = () => {
       if (state.value === StopwatchStates.Running) counter.value = (counter.value + 1) % Number.MAX_SAFE_INTEGER;
       timeout.value = setTimeout(incrementCounter, timingInterval);
-    }
+    };
     timeout.value = setTimeout(incrementCounter, timingInterval);
   };
   const timingInterval = 100;
@@ -39,7 +39,7 @@ export const StopwatchDefaults = (() => {
   const removeTiming = (timeout) => clearTimeout(timeout.value);
   const setCounter = ({ counter }, { counterValue }) => {
     counter.value = counterValue || 0;
-  }
+  };
   /** @type {Types.TransitionHandler} */
   const transitionHandler = ({ state }, { name }) => {
     if (name === StopwatchTransitions.Reset) return { nextState: state.value, onBeforeTransition: setCounter };
@@ -59,13 +59,13 @@ export const StopwatchDefaults = (() => {
 
 /**
  * Stopwatch implementation
- * 
+ *
  * {@link Counter} provided with defaults to act as a stopwatch. Use {@link Types.TimerRef|timerRef} and call `timerRef.current?.transitionTo` to change `state`.
  * By default `counter` increments every 100 ms, time is rendered in mm:ss.d format. Provide custom {@link Types.Render|render} property defining animated values derived
  * from counter to get hours, days etc, or use one of predefined {@link Types.Renderers|Renderers}. For higher granularity, change `timingInterval` in ms,
  * it defines how often {@link Types.TimingHandler|timingHandler} is called that changes counter value.
  * For better precision use `onBeforeTransition` and `onAfterTransition` properties, or provide custom self-adjusting `timingHandler`.
- * 
+ *
  * ```
  * import React, { useRef, useCallback } from 'react';
  * import { View, TouchableOpacity, Text } from 'react-native';

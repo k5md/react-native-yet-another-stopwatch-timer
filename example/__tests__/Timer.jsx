@@ -7,10 +7,10 @@ const Component = ({ initialCounterValue }) => {
   const [ laps, setLaps ] = useState(0);
   const timerRef = useRef(null);
   // use timerRef to call transitionTo property to switch states, set transition name to one of StopwatchTransitions, counterValue if you want to change it outside of timingHandler
-  const run = useCallback(() => timerRef.current?.transitionTo({ name: TimerTransitions.Run, counterValue: initialCounterValue }), [ timerRef ]);
+  const run = useCallback(() => timerRef.current?.transitionTo({ name: TimerTransitions.Run, counterValue: initialCounterValue }), [ timerRef, initialCounterValue ]);
   const onAfterTransition = useCallback(({ state }) => {
-    if (state.value === TimerStates.Stopped) setLaps((laps) => laps + 1);
-  }, [ laps, setLaps ]);
+    if (state.value === TimerStates.Stopped) setLaps((prevLaps) => prevLaps + 1);
+  }, [ setLaps ]);
   return (
     <View>
       <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>

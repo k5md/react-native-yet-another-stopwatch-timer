@@ -24,7 +24,7 @@ export default () => {
     }
   }, [ timerRef ]);
   const reset = useCallback(() => timerRef.current?.transitionTo({
-    name: TimerTransitions.Reset, 
+    name: TimerTransitions.Reset,
     counterValue: initialTimerValue,
   }), [ timerRef ]);
 
@@ -33,7 +33,7 @@ export default () => {
   }, []);
 
   useEffect(reset, [reset]);
-  
+
   return (
     <>
       <ReducedMotionConfig mode={ReduceMotion.Never} />

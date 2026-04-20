@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-})
+});
 
 const App = () => (
   <View style={[ styles.container, styles.body ]}>

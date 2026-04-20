@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 /** @type {Types.Place} */
 export const Place = ({ digit: actualDigit, style }) => {
-  const range = useMemo(() => Array.from({ length: 10 }, (_, assignedDigit) => 
+  const range = useMemo(() => Array.from({ length: 10 }, (_, assignedDigit) =>
     (<Digit key={assignedDigit} assignedDigit={assignedDigit} actualDigit={actualDigit} style={[ assignedDigit && styles.digit, style?.digit ]} />)
   ), [ actualDigit, style ]);
   return (<View style={[ styles.place, style?.place ]}>{range}</View>);

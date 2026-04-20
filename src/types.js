@@ -23,13 +23,13 @@
 
 /**
  * Additional context provided by transitionTo function, it is used to switch states depending on name property
- * 
+ *
  * @typedef {TransitionExtraContextProps & Object} TransitionExtraContext
  */
 
 /**
  * Description of next state, what to do before and after state change
- * 
+ *
  * @typedef {Object} Transition
  * @property {OnBeforeTransition} [onBeforeTransition]
  * @property {OnAfterTransition} [onAfterTransition]
@@ -38,9 +38,9 @@
 
 /**
  * Called before state change, use for managing side-effects
- * 
+ *
  * Return truthy value to cancel state change and onBeforeTransition handlers calls of lower priority, order described in {@link TransitionRouter}.
- * 
+ *
  * @callback OnBeforeTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -50,7 +50,7 @@
 
 /**
  * Called after state change, use for managing side-effects.
- * 
+ *
  * @callback OnAfterTransition
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -60,9 +60,9 @@
 
 /**
  * Produces object describing changes based on `transitionExtraContext.name`: next state, what to do before and after state change
- * 
+ *
  * If this function returns falsy, then state value won't get changed, no `onBeforeTransition` and no `onAfterTransition` handlers will get called.
- * 
+ *
  * @callback TransitionHandler
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -71,16 +71,16 @@
 
 /**
  * Manages state value after routing
- * 
+ *
  * This function calls `transitionContext.transitionHandler` to get {@link Transition} object to change from current state to next,
  * calls `onBeforeTransition` callbacks in the following order:
  * 1. property of `transitionTo` argument, passed when calling `transitionTo` from `timerRef.current` {@link TransitionTo}
  * 2. property of `transition` object returned from `transitionHandler` {@link TransitionHandler}
  * 3. property passed to component {@link Counter}
- * 
+ *
  * If any of these callbacks return truthy then transition gets cancelled and subsequent callbacks (other `onBeforeTransition` and every `onAfterTransition`) don't get called.
  * Else it updates state to new value from transition and calls `onAfterTransition` callbacks in the same order.
- * 
+ *
  * @callback TransitionRouter
  * @param {TransitionContext} transitionContext
  * @param {TransitionExtraContext} transitionExtraContext
@@ -89,14 +89,14 @@
 
 /**
  * This function is used to switch timer state
- * 
+ *
  * Partially applied version of {@link TransitionRouter} with `transitionContext` argument pre-bound,
  * this function is intended to be the only way parent component interacts with counter,
- * one does this by switching states. 
+ * one does this by switching states.
  * ```
  * const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
  * ```
- * 
+ *
  * @callback TransitionTo
  * @param {TransitionExtraContext} transitionExtraContext
  * @returns {void}
@@ -105,7 +105,7 @@
 /**
  * Context provided and captured from {@link Counter}, containing handlers passed as props to component, state and
  * counter
- * 
+ *
  * @typedef {Object} TransitionContext
  * @property {OnBeforeTransition} onBeforeTransition
  * @property {OnAfterTransition} onAfterTransition
@@ -124,21 +124,21 @@
 
 /**
  * Handle to control timer
- * 
+ *
  * Used to provide transitionTo function to switch state, this function is intended to be the only way parent component
  * interacts with timer.
  * ```
  * const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Run }), [ timerRef ]);
  * ```
- * 
+ *
  * The ref is also passed to {@link TimingHandler} to switch state when counter reaches certain values.
- * 
+ *
  * @typedef {RefObject<TimerRefProps>} TimerRef
  */
 
 /**
  * Timing worklet that runs on UI-thread for updating counter and schedules a recursive call to itself
- * 
+ *
  * It should change counter value based on current state every timingInterval and update timeout shared variable
  * so that whenever component gets rerendered, removeTiming could perform a clean up.
  * ```
@@ -154,7 +154,7 @@
     timeout.value = setTimeout(decrementCounter, timingInterval);
   };
  * ```
- * 
+ *
  * @callback TimingHandler
  * @param {Object} context
  * @param {any} context.timingInterval
@@ -166,11 +166,11 @@
 
 /**
  * Callback called on base component rerender
- * 
+ *
  * It must perform cleanup for whatever repeating timeout logic one uses in timingHandler
  * (e.g. if setTimeout is used, then it has to call clearTimeout), use timeout shared variable in timingHandler to
  * pass current timeout identifier.
- * 
+ *
  * @callback RemoveTiming
  * @param {SharedValue} timeout Identifier set by timingHandler
  * @returns {void}
@@ -185,17 +185,17 @@
 
 /**
  * Style overrides for component, this get passed to `render` function {@link Render}
- * 
+ *
  * @typedef {NamedStyles<StylesProps> & Record<string, AnyStyle>} Styles
  */
 
 /**
  * Counter render function presents counter value as {@link ReactNode} and is passed to base component {@link Counter}
- * 
+ *
  * One can provide their custom function or use already implemented ones in {@link Renderers}.
- * 
+ *
  * @callback Render
- * @param {SharedValue} counter 
+ * @param {SharedValue} counter
  * @param {any} timingInterval
  * @param {any} initialCounterValue
  * @param {Styles} style
@@ -227,7 +227,7 @@
 
 /**
  * Base component, binds state, counter and timeout properties to `transitionRouter` to provide means for changing state
- * 
+ *
  * @callback Counter
  * @param {CounterProps} props
  * @returns {ReactNode}

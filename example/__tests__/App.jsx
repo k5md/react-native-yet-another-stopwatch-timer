@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, act } from '@testing-library/react-native';
 import React from 'react';
 import App from '../App';
 

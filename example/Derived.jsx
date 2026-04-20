@@ -21,7 +21,7 @@ export default () => {
   const reset = useCallback(() => timerRef.current?.transitionTo({
     name: TimerTransitions.Reset,
     counterValue: initialTimerValue,
-  }), [ timerRef ]);
+  }), [ timerRef, initialTimerValue ]);
 
   useEffect(reset, [reset]);
 
@@ -59,7 +59,7 @@ export default () => {
                 <Place digit={secondsTenths} style={style} />
                 <Place digit={secondsOnes} style={style} />
               </>
-            )
+            );
           }}
         />
       </View>

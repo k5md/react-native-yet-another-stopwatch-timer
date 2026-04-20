@@ -71,7 +71,7 @@ export const Counter = ({
     const transitionTo = transitionRouter.bind(null, transitionContext);
     return { state, counter, timeout, transitionTo };
   }, [ onBeforeTransition, onAfterTransition, state, counter, timeout, transitionHandler, transitionRouter ]);
-  
+
   return (
     <Animated.View style={[ styles.container, style?.container ]}>
       {render({ counter, timingInterval, initialCounterValue, style })}

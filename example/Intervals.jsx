@@ -10,13 +10,20 @@ const timerStyles = StyleSheet.create({
   },
 });
 
+const lapStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+});
+
 const Lap = ({ value }) => {
   return (
-    <Animated.View style={{ flex: 1, flexDirection: 'row' }}>
+    <Animated.View style={lapStyles.container}>
       {Renderers.Static({ counter: value, timingInterval: StopwatchDefaults.timingInterval })}
     </Animated.View>
   );
-}
+};
 
 export default () => {
   const timerRef = useRef(null);
@@ -29,17 +36,17 @@ export default () => {
     setStart(timerRef.current.counter.value);
     timerRef.current.transitionTo({ name: StopwatchTransitions.Run });
   }, [ timerRef, setStart ]);
-  const lap = useCallback(() => {
+  const record = useCallback(() => {
     if (timerRef.current?.state.value !== StopwatchStates.Running) return;
-    setLaps((laps) => laps.concat({ id: laps.length, lap: timerRef.current.counter.value - start }));
-  }, [ timerRef ]);
+    setLaps((prevLaps) => prevLaps.concat({ id: prevLaps.length, lap: timerRef.current.counter.value - start }));
+  }, [ timerRef, start ]);
   const stop = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Stop }), [ timerRef ]);
   const reset = useCallback(() => {
     if (!timerRef.current) return;
     timerRef.current.transitionTo({ name: StopwatchTransitions.Reset });
     setLaps([]);
   }, [ timerRef, setLaps ]);
-  
+
   return (
     <>
       <ReducedMotionConfig mode={ReduceMotion.Never} />
@@ -47,7 +54,7 @@ export default () => {
         <Text>Intervals</Text>
         <View style={[ styles.container, styles.text ]}>
           <Button label="Run" onPress={run} />
-          <Button label="Lap" onPress={lap} />
+          <Button label="Record" onPress={record} />
           <Button label="Stop" onPress={stop} />
           <Button label="Reset" onPress={reset} />
         </View>

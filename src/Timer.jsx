@@ -20,7 +20,7 @@ export const TimerDefaults = (() => {
         if (counter.value < 1) runOnJS(timerRef.current.transitionTo)({ name: StopwatchTransitions.Stop });
       }
       timeout.value = setTimeout(decrementCounter, timingInterval);
-    }
+    };
     timeout.value = setTimeout(decrementCounter, timingInterval);
   };
   return { timingHandler };
@@ -28,13 +28,13 @@ export const TimerDefaults = (() => {
 
 /**
  * Timer implementation
- * 
+ *
  * {@link Stopwatch} provided with custom `timingHandler` to act as a timer. Use {@link Types.TimerRef|timerRef} and call `timerRef.current?.transitionTo` to change `state`.
  * By default `counter` decrements every 100 ms, time is rendered in mm:ss.d format. Provide custom {@link Types.Render|render} property defining animated values derived
  * from counter to get hours, days etc, or use one of predefined {@link Types.Renderers|Renderers}. For higher granularity, change `timingInterval` in ms,
  * it defines how often {@link Types.TimingHandler|timingHandler} is called that changes counter value.
  * For better precision use `onBeforeTransition` and `onAfterTransition` properties, or provide custom self-adjusting `timingHandler`.
- * 
+ *
  * ```
  * import React, { useState, useRef, useCallback } from 'react';
  * import { View, TouchableOpacity, Text } from 'react-native';

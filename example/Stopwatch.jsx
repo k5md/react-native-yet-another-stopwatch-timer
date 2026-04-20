@@ -22,7 +22,7 @@ export default () => {
   const onAfterTransition = useCallback(({ counter, state }, { name }) => {
     console.log([ `Transition: ${name}`, `Counter: ${counter.value}`, `State: ${state.value}` ].join('\t'));
   }, []);
-  
+
   return (
     <>
       <ReducedMotionConfig mode={ReduceMotion.Never} />

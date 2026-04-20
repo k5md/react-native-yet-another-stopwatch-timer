@@ -23,5 +23,5 @@ export const styles = StyleSheet.create({
 export const Button = ({ label, onPress }) => (
   <TouchableOpacity style={[ styles.container, styles.button ]} onPress={onPress}>
     <Text style={styles.text}>{label}</Text>
-  </TouchableOpacity> 
+  </TouchableOpacity>
 );
