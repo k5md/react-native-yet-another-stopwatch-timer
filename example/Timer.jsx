@@ -13,7 +13,7 @@ const timerStyles = StyleSheet.create({
 export default () => {
   const timerRef = useRef(null);
 
-  const initialTimerValue = 50;
+  const initialTimerValue = 5000;
 
   const runPause = useCallback(() => {
     if (!timerRef.current) return;

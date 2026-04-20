@@ -18,7 +18,6 @@ const Component = () => {
   );
 };
 
-
 beforeEach(() => {
   jest.useFakeTimers();
 });
@@ -47,7 +46,7 @@ test('renders, increments counter, calls callbacks', async () => {
   });
   await waitFor(() => {
     expect(logSpy).toHaveBeenCalledWith(
-      expect.objectContaining({ counter: expect.objectContaining({ value: 42 }), state: expect.objectContaining({ value: StopwatchStates.Paused }) }),
+      expect.objectContaining({ counter: expect.objectContaining({ value: 4200 }), state: expect.objectContaining({ value: StopwatchStates.Paused }) }),
       expect.objectContaining({ name: StopwatchTransitions.Pause }),
       expect.objectContaining({ nextState: StopwatchStates.Paused }),
     );

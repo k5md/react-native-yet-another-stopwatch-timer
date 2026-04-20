@@ -19,5 +19,4 @@ afterEach(async () => {
 test('renders', async () => {
   render(<App />);
   jest.advanceTimersByTime(1000);
-
 });

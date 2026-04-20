@@ -2,18 +2,32 @@ import React from 'react';
 import { Text, TextInput } from 'react-native';
 import Animated, { useDerivedValue, useAnimatedProps } from 'react-native-reanimated';
 import Place from './Place';
-import { getMinutes, getSeconds, getDeciseconds } from './utils';
 
 /** @typedef {import('./types').Render} Types.Render */
 /** @typedef {import('./types').Renderers} Types.Renderers */
 
+const getDeciseconds = function(counter, modulo = 10) {
+  'worklet';
+  return Math.floor(counter.value / 100) % modulo;
+};
+
+const getSeconds = function(counter, modulo = 60) {
+  'worklet';
+  return Math.floor(counter.value / 1000) % modulo;
+};
+
+const getMinutes = function(counter, modulo = 60) {
+  'worklet';
+  return Math.floor(counter.value / 60000) % modulo;
+};
+
 /** @type {Types.Render} */
-export const Individual = ({ counter, timingInterval, style }) => {
-  const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(timingInterval, counter.value) / 10) % 10);
-  const minutesOnes = useDerivedValue(() => getMinutes(timingInterval, counter.value) % 10);
-  const secondsTenths = useDerivedValue(() => Math.floor(getSeconds(timingInterval, counter.value) / 10) % 10);
-  const secondsOnes = useDerivedValue(() => getSeconds(timingInterval, counter.value) % 10);
-  const deciseconds = useDerivedValue(() => getDeciseconds(timingInterval, counter.value));
+export const Individual = ({ counter, style }) => {
+  const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(counter) / 10) % 10);
+  const minutesOnes = useDerivedValue(() => getMinutes(counter) % 10);
+  const secondsTenths = useDerivedValue(() => Math.floor(getSeconds(counter) / 10) % 10);
+  const secondsOnes = useDerivedValue(() => getSeconds(counter) % 10);
+  const deciseconds = useDerivedValue(() => getDeciseconds(counter));
 
   return (
     <>
@@ -31,12 +45,12 @@ export const Individual = ({ counter, timingInterval, style }) => {
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 /** @type {Types.Render} */
-export const Group = ({ counter, timingInterval, style }) => {
+export const Group = ({ counter, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
-    const minutes = getMinutes(timingInterval, counter.value);
-    const seconds = getSeconds(timingInterval, counter.value);
-    const deciseconds = getDeciseconds(timingInterval, counter.value);
+    const minutes = getMinutes(counter);
+    const seconds = getSeconds(counter);
+    const deciseconds = getDeciseconds(counter);
     const text = `${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}.${deciseconds}`;
     return ({ text });
   });
@@ -46,10 +60,10 @@ export const Group = ({ counter, timingInterval, style }) => {
 };
 
 /** @type {Types.Render} */
-export const Static = ({ counter, timingInterval, style }) => {
-  const minutes = getMinutes(timingInterval, counter);
-  const seconds = getSeconds(timingInterval, counter);
-  const deciseconds = getDeciseconds(timingInterval, counter);
+export const Static = ({ counter, style }) => {
+  const minutes = getMinutes(counter);
+  const seconds = getSeconds(counter);
+  const deciseconds = getDeciseconds(counter);
   const text = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${deciseconds}`;
 
   return (

@@ -29,8 +29,8 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-test('renders, decrements counter, calls callbacks', async () => {
-  render(<Component initialCounterValue={10}/>);
+test('decrements counter by default timerInterval', async () => {
+  render(<Component initialCounterValue={1000}/>);
 
   expect(screen.getByText('Laps: 0')).toBeTruthy();
   act(() => {

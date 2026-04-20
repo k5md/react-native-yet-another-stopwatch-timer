@@ -18,6 +18,7 @@ module.exports = {
     'semi': ['error', 'always'],
     'object-curly-spacing': ['error', 'always'],
     'no-trailing-spaces': 'error',
+    'no-bitwise': 'off',
   },
   ignorePatterns: [
     '**/node_modules/**',

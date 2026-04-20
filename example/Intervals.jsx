@@ -17,14 +17,6 @@ const lapStyles = StyleSheet.create({
   },
 });
 
-const Lap = ({ value }) => {
-  return (
-    <Animated.View style={lapStyles.container}>
-      {Renderers.Static({ counter: value, timingInterval: StopwatchDefaults.timingInterval })}
-    </Animated.View>
-  );
-};
-
 export default () => {
   const timerRef = useRef(null);
 
@@ -37,13 +29,13 @@ export default () => {
     timerRef.current.transitionTo({ name: StopwatchTransitions.Run });
   }, [ timerRef, setStart ]);
   const record = useCallback(() => {
-    if (timerRef.current?.state.value !== StopwatchStates.Running) return;
+    if (!timerRef.current || timerRef.current.state.value !== StopwatchStates.Running) return;
     setLaps((prevLaps) => prevLaps.concat({ id: prevLaps.length, lap: timerRef.current.counter.value - start }));
   }, [ timerRef, start ]);
   const stop = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Stop }), [ timerRef ]);
   const reset = useCallback(() => {
     if (!timerRef.current) return;
-    timerRef.current.transitionTo({ name: StopwatchTransitions.Reset });
+    timerRef.current.transitionTo({ name: StopwatchTransitions.Reset, onAfterTransition: ({ counter }) => setStart(counter.value) });
     setLaps([]);
   }, [ timerRef, setLaps ]);
 
@@ -63,7 +55,11 @@ export default () => {
           style={timerStyles}
         />
         <View>
-          {laps.map(({ id, lap }) => <Lap key={id} value={lap} />)}
+          {laps.map(({ id, lap }) => (
+            <Animated.View key={id} style={lapStyles.container}>
+              {Renderers.Static({ counter: { value: lap }, timingInterval: StopwatchDefaults.timingInterval })}
+            </Animated.View>
+          ))}
         </View>
       </View>
     </>

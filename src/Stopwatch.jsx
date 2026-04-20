@@ -29,7 +29,7 @@ export const StopwatchDefaults = (() => {
   const timingHandler = function defaultTimingHandler({ timingInterval, counter, state, timeout }) {
     'worklet';
     const incrementCounter = () => {
-      if (state.value === StopwatchStates.Running) counter.value = (counter.value + 1) % Number.MAX_SAFE_INTEGER;
+      if (state.value === StopwatchStates.Running) counter.value = (counter.value + timingInterval) >>> 0; // NOTE: limit to uint32
       timeout.value = setTimeout(incrementCounter, timingInterval);
     };
     timeout.value = setTimeout(incrementCounter, timingInterval);

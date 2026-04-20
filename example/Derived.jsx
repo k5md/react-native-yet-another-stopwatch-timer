@@ -13,7 +13,7 @@ const timerStyles = StyleSheet.create({
 export default () => {
   const timerRef = useRef(null);
 
-  const initialTimerValue = 10 * 60 * 60 * 99;
+  const initialTimerValue = 1000 * 60 * 60 * 99; // NOTE: set timer to 99 hours
 
   const runPause = useCallback(() => timerRef.current?.transitionTo({
     name: timerRef.current.state.value === TimerStates.Running ? TimerTransitions.Pause : TimerTransitions.Run,
@@ -38,13 +38,13 @@ export default () => {
           timerRef={timerRef}
           style={timerStyles}
           render={({ counter, style }) => {
-            const hours = useDerivedValue(() => Math.floor(counter.value / 10 / 60 / 60));
+            const hours = useDerivedValue(() => Math.floor(counter.value / 1000 / 60 / 60));
             const hoursTenths = useDerivedValue(() => Math.floor(hours.value / 10));
             const hoursOnes = useDerivedValue(() => hours.value % 10);
-            const minutes = useDerivedValue(() => Math.floor(counter.value / 10 / 60) % 60);
+            const minutes = useDerivedValue(() => Math.floor(counter.value / 1000 / 60) % 60);
             const minutesTenths = useDerivedValue(() => Math.floor(minutes.value / 10));
             const minutesOnes = useDerivedValue(() => minutes.value % 10);
-            const seconds = useDerivedValue(() => Math.floor(counter.value / 10) % 60);
+            const seconds = useDerivedValue(() => Math.floor(counter.value / 1000) % 60);
             const secondsTenths = useDerivedValue(() => Math.floor(seconds.value / 10));
             const secondsOnes = useDerivedValue(() => seconds.value % 10);
 
