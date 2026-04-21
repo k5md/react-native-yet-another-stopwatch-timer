@@ -20,10 +20,7 @@ export const TimerDefaults = (() => {
   return { timingHandler };
 })();
 
-const Timer = ({
+export const Timer = ({
   timingHandler = TimerDefaults.timingHandler,
   ...rest
-}) => (<Stopwatch timingHandler={timingHandler} {...rest} />);
-
-export { Timer };
-export default Timer;
+}) => (<Stopwatch timingHandler={timingHandler} {.../** @type {any} */(rest)} />);

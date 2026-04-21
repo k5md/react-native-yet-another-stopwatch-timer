@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import Digit from './Digit';
+import { Digit } from './Digit';
 
 const styles = StyleSheet.create({
   place: {
@@ -17,5 +17,3 @@ export const Place = ({ digit: actualDigit, style }) => {
   ), [ actualDigit, style ]);
   return (<View style={[ styles.place, style?.place ]}>{range}</View>);
 };
-
-export default Place;

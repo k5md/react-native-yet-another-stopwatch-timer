@@ -73,5 +73,3 @@ export const Counter = ({
     </Animated.View>
   );
 };
-
-export default Counter;

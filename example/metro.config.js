@@ -35,7 +35,7 @@ const config = {
           if (target.hasOwnProperty(name)) {
             return target[name];
           }
-          return path.resolve(__dirname, 'node_modules', name);
+          return path.resolve(__dirname, 'node_modules', String(name));
         },
       },
     ),

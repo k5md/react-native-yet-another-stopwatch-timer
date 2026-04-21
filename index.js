@@ -1,22 +1,6 @@
-import Stopwatch, { StopwatchStates, StopwatchTransitions, StopwatchDefaults } from './src/Stopwatch';
-import Timer, { TimerStates, TimerTransitions, TimerDefaults } from './src/Timer';
-import Counter, { CounterDefaults } from './src/Counter';
-import Place from './src/Place';
-import Digit from './src/Digit';
-import Renderers from './src/Renderers';
-
-export {
-  Stopwatch,
-  StopwatchStates,
-  StopwatchTransitions,
-  StopwatchDefaults,
-  Timer,
-  TimerStates,
-  TimerTransitions,
-  TimerDefaults,
-  Counter,
-  CounterDefaults,
-  Place,
-  Digit,
-  Renderers,
-};
+export { Stopwatch, StopwatchStates, StopwatchTransitions, StopwatchDefaults } from './src/Stopwatch';
+export { Timer, TimerStates, TimerTransitions, TimerDefaults } from './src/Timer';
+export { Counter, CounterDefaults } from './src/Counter';
+export { Place } from './src/Place';
+export { Digit } from './src/Digit';
+export { Renderers } from './src/Renderers';

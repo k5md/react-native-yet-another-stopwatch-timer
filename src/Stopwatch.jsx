@@ -1,6 +1,6 @@
 import React from 'react';
-import Counter from './Counter';
-import Renderers from './Renderers';
+import { Counter } from './Counter';
+import { Renderers } from './Renderers';
 
 export const StopwatchStates = {
   Unset: 'Unset',
@@ -29,7 +29,7 @@ export const StopwatchDefaults = (() => {
   };
   const timingInterval = 100;
   const removeTiming = (timeout) => clearTimeout(timeout.value);
-  const setCounter = ({ counter }, { counterValue }) => {
+  const setCounter = ({ counter }, /** @type {any} */{ counterValue }) => {
     counter.value = counterValue || 0;
   };
   const transitionHandler = ({ state }, { name }) => {
@@ -48,7 +48,7 @@ export const StopwatchDefaults = (() => {
   };
 })();
 
-const Stopwatch = ({
+export const Stopwatch = ({
   initialState = StopwatchDefaults.initialState,
   initialCounterValue = StopwatchDefaults.initialCounterValue,
   render = Renderers.Group,
@@ -66,9 +66,6 @@ const Stopwatch = ({
     timingInterval={timingInterval}
     removeTiming={removeTiming}
     transitionHandler={transitionHandler}
-    {...rest}
+    {.../** @type {any} */(rest)}
   />
 );
-
-export { Stopwatch };
-export default Stopwatch;

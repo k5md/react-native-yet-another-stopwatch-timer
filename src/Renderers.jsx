@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextInput } from 'react-native';
 import Animated, { useDerivedValue, useAnimatedProps } from 'react-native-reanimated';
-import Place from './Place';
+import { Place } from './Place';
 
 const getDeciseconds = function(counter, modulo = 10) {
   'worklet';
@@ -40,6 +40,7 @@ export const Individual = ({ counter, style }) => {
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 export const Group = ({ counter, style }) => {
+  /** @type {any} */
   const animatedProps = useAnimatedProps(() => {
     'worklet';
     const minutes = getMinutes(counter);
@@ -63,6 +64,4 @@ export const Static = ({ counter, style }) => {
   );
 };
 
-const Renderers = { Individual, Group, Static };
-
-export default Renderers;
+export const Renderers = { Individual, Group, Static };
