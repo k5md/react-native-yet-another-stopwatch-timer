@@ -1,9 +1,6 @@
 import React from 'react';
 import Animated, { useAnimatedProps } from 'react-native-reanimated';
 
-/** @typedef {import('./types').Digit} Types.Digit */
-
-/** @type {Types.Digit} */
 export const Digit = ({ assignedDigit, actualDigit, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
@@ -19,5 +16,4 @@ export const Digit = ({ assignedDigit, actualDigit, style }) => {
   );
 };
 
-/** @type {Types.Digit} */
 export default Digit;

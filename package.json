@@ -11,6 +11,7 @@
   "version": "1.0.0",
   "description": "Highly extensible stopwatch, timer component for React Native",
   "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "src"
   ],
@@ -38,6 +39,7 @@
     "@babel/eslint-parser": "^7.28.6",
     "@react-native/babel-preset": "^0.85.2",
     "@react-native/eslint-config": "^0.85.2",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "typescript": "^6.0.3"
   }
 }

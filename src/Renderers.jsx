@@ -3,9 +3,6 @@ import { Text, TextInput } from 'react-native';
 import Animated, { useDerivedValue, useAnimatedProps } from 'react-native-reanimated';
 import Place from './Place';
 
-/** @typedef {import('./types').Render} Types.Render */
-/** @typedef {import('./types').Renderers} Types.Renderers */
-
 const getDeciseconds = function(counter, modulo = 10) {
   'worklet';
   return Math.floor(counter.value / 100) % modulo;
@@ -21,14 +18,12 @@ const getMinutes = function(counter, modulo = 60) {
   return Math.floor(counter.value / 60000) % modulo;
 };
 
-/** @type {Types.Render} */
 export const Individual = ({ counter, style }) => {
   const minutesTenths = useDerivedValue(() => Math.floor(getMinutes(counter) / 10) % 10);
   const minutesOnes = useDerivedValue(() => getMinutes(counter) % 10);
   const secondsTenths = useDerivedValue(() => Math.floor(getSeconds(counter) / 10) % 10);
   const secondsOnes = useDerivedValue(() => getSeconds(counter) % 10);
   const deciseconds = useDerivedValue(() => getDeciseconds(counter));
-
   return (
     <>
       <Place digit={minutesTenths} style={style} />
@@ -44,7 +39,6 @@ export const Individual = ({ counter, style }) => {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
-/** @type {Types.Render} */
 export const Group = ({ counter, style }) => {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
@@ -59,19 +53,16 @@ export const Group = ({ counter, style }) => {
   );
 };
 
-/** @type {Types.Render} */
 export const Static = ({ counter, style }) => {
   const minutes = getMinutes(counter);
   const seconds = getSeconds(counter);
   const deciseconds = getDeciseconds(counter);
   const text = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${deciseconds}`;
-
   return (
     <Text style={style?.digit}>{text}</Text>
   );
 };
 
-/** @type {Types.Renderers} */
 const Renderers = { Individual, Group, Static };
 
 export default Renderers;
