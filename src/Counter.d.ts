@@ -44,13 +44,13 @@ export declare const CounterDefaults: {
   readonly [K in CounterDefaultedPropKeys]: CounterBaseProps[K];
 };
 
-export type CounterUserProps = SetOptional<CounterBaseProps, CounterDefaultedPropKeys>;
+export type CounterProps = SetOptional<CounterBaseProps, CounterDefaultedPropKeys>;
 
 /**
  * Base component, binds state, counter and timeout properties to `transitionRouter` to provide means for changing state
  */
 export declare function Counter(
-  props: CounterUserProps,
+  props: CounterProps,
 ): ReactNode;
 
 

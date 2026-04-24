@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { TimerRef, Render, TimingHandler, SetOptional } from './shared';
-import type { CounterUserProps, Counter } from './Counter';
+import type { CounterProps, Counter } from './Counter';
 import type { Renderers } from './Renderers';
 
 export declare const StopwatchStates: {
@@ -24,10 +24,10 @@ export type StopwatchTransition = (typeof StopwatchTransitions)[keyof typeof Sto
 export type StopwatchDefaultedPropKeys = 'initialState' | 'initialCounterValue' | 'render' | 'timingHandler' | 'timingInterval' | 'removeTiming' | 'transitionHandler' | 'transitionRouter';
 
 export declare const StopwatchDefaults: {
-  readonly [K in StopwatchDefaultedPropKeys]: StopwatchUserProps[K];
+  readonly [K in StopwatchDefaultedPropKeys]: StopwatchProps[K];
 };
 
-export type StopwatchUserProps = SetOptional<CounterUserProps, StopwatchDefaultedPropKeys>;
+export type StopwatchProps = SetOptional<CounterProps, StopwatchDefaultedPropKeys>;
 
 /**
  * Stopwatch implementation
@@ -57,4 +57,4 @@ export type StopwatchUserProps = SetOptional<CounterUserProps, StopwatchDefaulte
  * };
  * ```
  */
-export function Stopwatch(props: StopwatchUserProps): ReactNode;
+export function Stopwatch(props: StopwatchProps): ReactNode;

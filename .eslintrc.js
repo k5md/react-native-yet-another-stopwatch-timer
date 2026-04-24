@@ -25,5 +25,6 @@ module.exports = {
     '**/android/**',
     '**/ios/**',
     '**/.bundle/**',
+    '*.d.ts',
   ],
 };

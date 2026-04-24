@@ -1,7 +1,7 @@
 
 import type { ReactNode } from 'react';
 import type { TimerRef, Render, TimingHandler, SetOptional } from './shared';
-import type { StopwatchUserProps, Stopwatch } from './Stopwatch';
+import type { StopwatchProps, Stopwatch } from './Stopwatch';
 import type { Renderers } from './Renderers';
 
 export { 
@@ -14,10 +14,10 @@ export {
 export type TimerDefaultedPropKeys = 'timingHandler';
 
 export declare const TimerDefaults: {
-  readonly [K in TimerDefaultedPropKeys]: StopwatchUserProps[K];
+  readonly [K in TimerDefaultedPropKeys]: StopwatchProps[K];
 };
 
-export type TimerUserProps = SetOptional<StopwatchUserProps, TimerDefaultedPropKeys>;
+export type TimerProps = SetOptional<StopwatchProps, TimerDefaultedPropKeys>;
 
 /**
  * Timer implementation
@@ -52,5 +52,5 @@ export type TimerUserProps = SetOptional<StopwatchUserProps, TimerDefaultedPropK
  * ```
  */
 export declare function Timer(
-  props: TimerUserProps,
+  props: TimerProps,
 ): (ReactNode);
