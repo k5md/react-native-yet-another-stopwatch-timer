@@ -1,8 +1,5 @@
 # react-native-yet-another-stopwatch-timer
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react&label=react)
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native&label=react-native)
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native-reanimated&label=react-native-reanimated)
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native-worklets&label=react-native-worklets)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react&label=react) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native&label=react-native) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native-reanimated&label=react-native-reanimated) ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Fk5md%2Freact-native-yet-another-stopwatch-timer%2Fraw%2Fmaster%2Fpackage.json&query=%24.peerDependencies.react-native-worklets&label=react-native-worklets)
 
 ## Features
 A fully extensible stopwatch, timer component for React Native.
@@ -10,7 +7,7 @@ A fully extensible stopwatch, timer component for React Native.
 * Allows for custom timing functions, precision, group / digit rendering, states and transitions
 
 <p align="center">
-  <img src="https://s7.gifyu.com/images/">
+  <img src="assets/stopwatch-timer-illustration.gif" alt="Demo" width="600">
 </p>
 
 ## Installation
