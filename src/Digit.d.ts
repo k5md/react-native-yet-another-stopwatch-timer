@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
-import type { Styles } from './shared';
+import type { AnyStyle } from './shared';
 
 export type DigitProps = {
   assignedDigit: number,
   actualDigit: SharedValue<any>,
-  style?: Styles,
+  style?: AnyStyle,
 };
 
 export declare function Digit(

@@ -1,5 +1,5 @@
 import { ReactNode, RefObject } from 'react';
-import { ViewStyle, TextStyle, ImageStyle, StyleSheet } from 'react-native';
+import { ViewStyle, TextStyle, ImageStyle, StyleProp } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 import { Counter } from './Counter';
 import { Place } from './Place';
@@ -13,6 +13,8 @@ export type SetOptional<T, K extends keyof T> = Prettify<{
 } & {
   [P in keyof T as P extends K ? never : P]: T[P];
 }>;
+
+export type AnyStyle = StyleProp<ViewStyle | TextStyle | ImageStyle>;
 
 /**
  * Additional context provided by transitionTo function, it is used to switch states depending on name property
