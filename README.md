@@ -121,12 +121,68 @@ PR are always welcome!
 
 ## Type Aliases
 
+<a id="anystyle"></a>
+
+### AnyStyle
+
+```ts
+type AnyStyle = StyleProp<ViewStyle | TextStyle | ImageStyle>;
+```
+
+***
+
+<a id="counterprops"></a>
+
+### CounterProps
+
+```ts
+type CounterProps = SetOptional<CounterBaseProps, CounterDefaultedPropKeys>;
+```
+
+***
+
+<a id="digitprops"></a>
+
+### DigitProps
+
+```ts
+type DigitProps = object;
+```
+
+#### Properties
+
+<a id="actualdigit"></a>
+
+##### actualDigit
+
+```ts
+actualDigit: SharedValue<any>;
+```
+
+<a id="assigneddigit"></a>
+
+##### assignedDigit
+
+```ts
+assignedDigit: number;
+```
+
+<a id="style"></a>
+
+##### style?
+
+```ts
+optional style?: AnyStyle;
+```
+
+***
+
 <a id="onaftertransition"></a>
 
 ### OnAfterTransition
 
 ```ts
-type OnAfterTransition = (transitionContext, transitionExtraContext, transition) => void;
+type OnAfterTransition = (transitionContext: TransitionContext, transitionExtraContext: TransitionExtraContext, transition: Transition) => void;
 ```
 
 Called after state change, use for managing side-effects.
@@ -150,7 +206,7 @@ Called after state change, use for managing side-effects.
 ### OnBeforeTransition
 
 ```ts
-type OnBeforeTransition = (transitionContext, transitionExtraContext, transition) => boolean | void;
+type OnBeforeTransition = (transitionContext: TransitionContext, transitionExtraContext: TransitionExtraContext, transition: Transition) => boolean | void;
 ```
 
 Called before state change, use for managing side-effects
@@ -173,12 +229,40 @@ shouldInterrupt flag, if true transition won't happen
 
 ***
 
+<a id="placeprops"></a>
+
+### PlaceProps
+
+```ts
+type PlaceProps = object;
+```
+
+#### Properties
+
+<a id="digit"></a>
+
+##### digit
+
+```ts
+digit: SharedValue<any>;
+```
+
+<a id="style-1"></a>
+
+##### style?
+
+```ts
+optional style?: Styles;
+```
+
+***
+
 <a id="removetiming"></a>
 
 ### RemoveTiming
 
 ```ts
-type RemoveTiming = (timeout) => void;
+type RemoveTiming = (timeout: SharedValue) => void;
 ```
 
 Callback called on base component rerender
@@ -204,10 +288,10 @@ pass current timeout identifier.
 ### Render
 
 ```ts
-type Render = (props) => ReactNode;
+type Render = (props: object) => ReactNode;
 ```
 
-Counter render function presents counter value as [ReactNode](#) and is passed to base component [Counter](#counter)
+Counter render function presents counter value as [ReactNode](#) and is passed to base component [Counter](#counter-2)
 
 One can provide their custom function or use already implemented ones in [Renderers](#renderers).
 
@@ -227,6 +311,36 @@ One can provide their custom function or use already implemented ones in [Render
 
 ***
 
+<a id="stopwatchprops"></a>
+
+### StopwatchProps
+
+```ts
+type StopwatchProps = SetOptional<CounterProps, StopwatchDefaultedPropKeys>;
+```
+
+***
+
+<a id="stopwatchstate"></a>
+
+### StopwatchState
+
+```ts
+type StopwatchState = typeof StopwatchStates[keyof typeof StopwatchStates];
+```
+
+***
+
+<a id="stopwatchtransition"></a>
+
+### StopwatchTransition
+
+```ts
+type StopwatchTransition = typeof StopwatchTransitions[keyof typeof StopwatchTransitions];
+```
+
+***
+
 <a id="styles"></a>
 
 ### Styles
@@ -236,6 +350,12 @@ type Styles = object;
 ```
 
 Style overrides for component, this gets passed to [render](#render) function
+
+#### Indexable
+
+```ts
+[key: string]: AnyStyle
+```
 
 #### Properties
 
@@ -249,7 +369,7 @@ optional container?: AnyStyle;
 
 style for wrappers
 
-<a id="digit"></a>
+<a id="digit-1"></a>
 
 ##### digit?
 
@@ -257,7 +377,7 @@ style for wrappers
 optional digit?: AnyStyle;
 ```
 
-style for [Digit](#digit-1) component
+style for [Digit](#digit-2) component
 
 <a id="place"></a>
 
@@ -268,6 +388,16 @@ optional place?: AnyStyle;
 ```
 
 style for [Place](#place-1) component
+
+***
+
+<a id="timerprops"></a>
+
+### TimerProps
+
+```ts
+type TimerProps = SetOptional<StopwatchProps, TimerDefaultedPropKeys>;
+```
 
 ***
 
@@ -291,12 +421,56 @@ The ref is also passed to [TimingHandler](#timinghandler) to switch state when c
 
 ***
 
+<a id="timerrefprops"></a>
+
+### TimerRefProps
+
+```ts
+type TimerRefProps = object;
+```
+
+#### Properties
+
+<a id="counter"></a>
+
+##### counter
+
+```ts
+counter: SharedValue<any>;
+```
+
+<a id="state"></a>
+
+##### state
+
+```ts
+state: SharedValue<any>;
+```
+
+<a id="timeout"></a>
+
+##### timeout
+
+```ts
+timeout: SharedValue<any>;
+```
+
+<a id="transitionto"></a>
+
+##### transitionTo
+
+```ts
+transitionTo: TransitionTo;
+```
+
+***
+
 <a id="timinghandler"></a>
 
 ### TimingHandler
 
 ```ts
-type TimingHandler = (context) => void;
+type TimingHandler = (context: object) => void;
 ```
 
 Timing worklet that runs on UI-thread for updating counter and schedules a recursive call to itself
@@ -344,6 +518,32 @@ type Transition = object;
 
 Description of next state, what to do before and after state change
 
+#### Properties
+
+<a id="nextstate"></a>
+
+##### nextState
+
+```ts
+nextState: any;
+```
+
+<a id="onaftertransition-1"></a>
+
+##### onAfterTransition?
+
+```ts
+optional onAfterTransition?: OnAfterTransition;
+```
+
+<a id="onbeforetransition-1"></a>
+
+##### onBeforeTransition?
+
+```ts
+optional onBeforeTransition?: OnBeforeTransition;
+```
+
 ***
 
 <a id="transitioncontext"></a>
@@ -354,8 +554,50 @@ Description of next state, what to do before and after state change
 type TransitionContext = object;
 ```
 
-Context provided and captured from [Counter](#counter), containing handlers passed as props to component, state and
+Context provided and captured from [Counter](#counter-2), containing handlers passed as props to component, state and
 counter
+
+#### Properties
+
+<a id="counter-1"></a>
+
+##### counter
+
+```ts
+counter: SharedValue<any>;
+```
+
+<a id="onaftertransition-2"></a>
+
+##### onAfterTransition
+
+```ts
+onAfterTransition: OnAfterTransition;
+```
+
+<a id="onbeforetransition-2"></a>
+
+##### onBeforeTransition
+
+```ts
+onBeforeTransition: OnBeforeTransition;
+```
+
+<a id="state-1"></a>
+
+##### state
+
+```ts
+state: SharedValue<any>;
+```
+
+<a id="transitionhandler"></a>
+
+##### transitionHandler
+
+```ts
+transitionHandler: TransitionHandler;
+```
 
 ***
 
@@ -369,6 +611,12 @@ type TransitionExtraContext = object;
 
 Additional context provided by transitionTo function, it is used to switch states depending on name property
 
+#### Indexable
+
+```ts
+[key: string]: any
+```
+
 #### Properties
 
 <a id="name"></a>
@@ -381,14 +629,30 @@ name: string;
 
 transition name, used to route and create correct transition object in transitionHandler
 
+<a id="onaftertransition-3"></a>
+
+##### onAfterTransition?
+
+```ts
+optional onAfterTransition?: OnAfterTransition;
+```
+
+<a id="onbeforetransition-3"></a>
+
+##### onBeforeTransition?
+
+```ts
+optional onBeforeTransition?: OnBeforeTransition;
+```
+
 ***
 
-<a id="transitionhandler"></a>
+<a id="transitionhandler-1"></a>
 
 ### TransitionHandler
 
 ```ts
-type TransitionHandler = (transitionContext, transitionExtraContext) => Transition | void;
+type TransitionHandler = (transitionContext: TransitionContext, transitionExtraContext: TransitionExtraContext) => Transition | void;
 ```
 
 Produces object describing changes based on `transitionExtraContext.name`: next state, what to do before and after state change
@@ -415,16 +679,16 @@ Object corresponding to [Transition](#transition) or nothing
 ### TransitionRouter
 
 ```ts
-type TransitionRouter = (transitionContext, transitionExtraContext) => void;
+type TransitionRouter = (transitionContext: TransitionContext, transitionExtraContext: TransitionExtraContext) => void;
 ```
 
 Manages state value after routing
 
 This function calls `transitionContext.transitionHandler` to get [Transition](#transition) object to change from current state to next,
 calls `onBeforeTransition` handlers in the following order:
-1. property of `transitionTo` argument, passed when calling [transitionTo](#transitionto) from `timerRef.current`
-2. property of `transition` object returned from [transitionHandler](#transitionhandler)
-3. property passed to component [Counter](#counter)
+1. property of `transitionTo` argument, passed when calling [transitionTo](#transitionto-1) from `timerRef.current`
+2. property of `transition` object returned from [transitionHandler](#transitionhandler-1)
+3. property passed to component [Counter](#counter-2)
 
 If any of these callbacks return truthy then transition gets cancelled and subsequent callbacks (other `onBeforeTransition` and every `onAfterTransition`) don't get called.
 Else it updates state to new value from transition and calls `onAfterTransition` callbacks in the same order.
@@ -442,12 +706,12 @@ Else it updates state to new value from transition and calls `onAfterTransition`
 
 ***
 
-<a id="transitionto"></a>
+<a id="transitionto-1"></a>
 
 ### TransitionTo
 
 ```ts
-type TransitionTo = (transitionExtraContext) => void;
+type TransitionTo = (transitionExtraContext: TransitionExtraContext) => void;
 ```
 
 This function is used to switch timer state
@@ -469,7 +733,33 @@ const run = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTr
 
 `void`
 
+***
+
+<a id="timerstate"></a>
+
+### TimerState
+
+Renames and re-exports [StopwatchState](#stopwatchstate)
+
+***
+
+<a id="timertransition"></a>
+
+### TimerTransition
+
+Renames and re-exports [StopwatchTransition](#stopwatchtransition)
+
 ## Variables
+
+<a id="counterdefaults"></a>
+
+### CounterDefaults
+
+```ts
+const CounterDefaults: { readonly [K in CounterDefaultedPropKeys]: CounterBaseProps[K] };
+```
+
+***
 
 <a id="renderers"></a>
 
@@ -513,14 +803,138 @@ Static: Render;
 
 Renders counter value as a regular Text (use for fake sharedValue objects)
 
+***
+
+<a id="stopwatchdefaults"></a>
+
+### StopwatchDefaults
+
+```ts
+const StopwatchDefaults: { readonly [K in StopwatchDefaultedPropKeys]: StopwatchProps[K] };
+```
+
+***
+
+<a id="stopwatchstates"></a>
+
+### StopwatchStates
+
+```ts
+const StopwatchStates: object;
+```
+
+#### Type Declaration
+
+<a id="paused"></a>
+
+##### Paused
+
+```ts
+readonly Paused: "Paused";
+```
+
+<a id="running"></a>
+
+##### Running
+
+```ts
+readonly Running: "Running";
+```
+
+<a id="stopped"></a>
+
+##### Stopped
+
+```ts
+readonly Stopped: "Stopped";
+```
+
+<a id="unset"></a>
+
+##### Unset
+
+```ts
+readonly Unset: "Unset";
+```
+
+***
+
+<a id="stopwatchtransitions"></a>
+
+### StopwatchTransitions
+
+```ts
+const StopwatchTransitions: object;
+```
+
+#### Type Declaration
+
+<a id="pause"></a>
+
+##### Pause
+
+```ts
+readonly Pause: "Pause";
+```
+
+<a id="reset"></a>
+
+##### Reset
+
+```ts
+readonly Reset: "Reset";
+```
+
+<a id="run"></a>
+
+##### Run
+
+```ts
+readonly Run: "Run";
+```
+
+<a id="stop"></a>
+
+##### Stop
+
+```ts
+readonly Stop: "Stop";
+```
+
+***
+
+<a id="timerdefaults"></a>
+
+### TimerDefaults
+
+```ts
+const TimerDefaults: { readonly [K in TimerDefaultedPropKeys]: StopwatchProps[K] };
+```
+
+***
+
+<a id="timerstates"></a>
+
+### TimerStates
+
+Renames and re-exports [StopwatchStates](#stopwatchstates)
+
+***
+
+<a id="timertransitions"></a>
+
+### TimerTransitions
+
+Renames and re-exports [StopwatchTransitions](#stopwatchtransitions)
+
 ## Functions
 
-<a id="counter"></a>
+<a id="counter-2"></a>
 
 ### Counter()
 
 ```ts
-function Counter(props): ReactNode;
+function Counter(props: object): ReactNode;
 ```
 
 Base component, binds state, counter and timeout properties to `transitionRouter` to provide means for changing state
@@ -529,7 +943,7 @@ Base component, binds state, counter and timeout properties to `transitionRouter
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | \{ `initialCounterValue`: `any`; `initialState`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming`: [`RemoveTiming`](#removetiming); `render`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler`: [`TimingHandler`](#timinghandler); `timingInterval`: `any`; `transitionHandler`: [`TransitionHandler`](#transitionhandler); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
+| `props` | \{ `initialCounterValue`: `any`; `initialState`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming`: [`RemoveTiming`](#removetiming); `render`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler`: [`TimingHandler`](#timinghandler); `timingInterval`: `any`; `transitionHandler`: [`TransitionHandler`](#transitionhandler-1); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
 | `props.initialCounterValue` | `any` | initial value for counter SharedValue |
 | `props.initialState` | `any` | initial value for state SharedValue |
 | `props.onAfterTransition?` | [`OnAfterTransition`](#onaftertransition) | will be called after state change, details: [OnAfterTransition](#onaftertransition) |
@@ -540,7 +954,7 @@ Base component, binds state, counter and timeout properties to `transitionRouter
 | `props.timerRef` | [`TimerRef`](#timerref) | the intended handle to perform state transitions, details: [TimerRef](#timerref) |
 | `props.timingHandler` | [`TimingHandler`](#timinghandler) | worker that updates counter value, details: [TimingHandler](#timinghandler) |
 | `props.timingInterval` | `any` | intended time interval for timing handler to perform counter updates, by default counter gets increased by timingInterval |
-| `props.transitionHandler` | [`TransitionHandler`](#transitionhandler) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler) |
+| `props.transitionHandler` | [`TransitionHandler`](#transitionhandler-1) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler-1) |
 | `props.transitionRouter?` | [`TransitionRouter`](#transitionrouter) | calls transition handler and manages state value, details: [TransitionRouter](#transitionrouter) |
 
 #### Returns
@@ -549,12 +963,12 @@ Base component, binds state, counter and timeout properties to `transitionRouter
 
 ***
 
-<a id="digit-1"></a>
+<a id="digit-2"></a>
 
 ### Digit()
 
 ```ts
-function Digit(props): ReactNode;
+function Digit(props: DigitProps): ReactNode;
 ```
 
 Per-digit component that runs animation when assigned digit matches actual digit value
@@ -563,7 +977,7 @@ Per-digit component that runs animation when assigned digit matches actual digit
 
 | Parameter | Type |
 | ------ | ------ |
-| `props` | `DigitProps` |
+| `props` | [`DigitProps`](#digitprops) |
 
 #### Returns
 
@@ -576,7 +990,7 @@ Per-digit component that runs animation when assigned digit matches actual digit
 ### Place()
 
 ```ts
-function Place(props): ReactNode;
+function Place(props: PlaceProps): ReactNode;
 ```
 
 Represents one place of a number, groups digits (0-9) for animation purposes
@@ -585,7 +999,7 @@ Represents one place of a number, groups digits (0-9) for animation purposes
 
 | Parameter | Type |
 | ------ | ------ |
-| `props` | `PlaceProps` |
+| `props` | [`PlaceProps`](#placeprops) |
 
 #### Returns
 
@@ -598,11 +1012,11 @@ Represents one place of a number, groups digits (0-9) for animation purposes
 ### Stopwatch()
 
 ```ts
-function Stopwatch(props): ReactNode;
+function Stopwatch(props: object): ReactNode;
 ```
 
 Stopwatch implementation
-[Counter](#counter) provided with defaults to act as a stopwatch. Use [timerRef](#timerref) and call `timerRef.current?.transitionTo` to change `state`.
+[Counter](#counter-2) provided with defaults to act as a stopwatch. Use [timerRef](#timerref) and call `timerRef.current?.transitionTo` to change `state`.
 By default `counter` increments by 100 every 100 ms, time is rendered in mm:ss.d format. Provide custom [render](#render) property defining animated values derived
 from counter to get hours, days etc, or use one of predefined [Renderers](#renderers). For higher granularity, change `timingInterval` in ms,
 it defines how often [timingHandler](#timinghandler) is called that changes counter value.
@@ -632,7 +1046,7 @@ const Component = () => {
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | \{ `initialCounterValue?`: `any`; `initialState?`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming?`: [`RemoveTiming`](#removetiming); `render?`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler?`: [`TimingHandler`](#timinghandler); `timingInterval?`: `any`; `transitionHandler?`: [`TransitionHandler`](#transitionhandler); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
+| `props` | \{ `initialCounterValue?`: `any`; `initialState?`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming?`: [`RemoveTiming`](#removetiming); `render?`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler?`: [`TimingHandler`](#timinghandler); `timingInterval?`: `any`; `transitionHandler?`: [`TransitionHandler`](#transitionhandler-1); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
 | `props.initialCounterValue?` | `any` | initial value for counter SharedValue |
 | `props.initialState?` | `any` | initial value for state SharedValue |
 | `props.onAfterTransition?` | [`OnAfterTransition`](#onaftertransition) | will be called after state change, details: [OnAfterTransition](#onaftertransition) |
@@ -643,7 +1057,7 @@ const Component = () => {
 | `props.timerRef` | [`TimerRef`](#timerref) | the intended handle to perform state transitions, details: [TimerRef](#timerref) |
 | `props.timingHandler?` | [`TimingHandler`](#timinghandler) | worker that updates counter value, details: [TimingHandler](#timinghandler) |
 | `props.timingInterval?` | `any` | intended time interval for timing handler to perform counter updates, by default counter gets increased by timingInterval |
-| `props.transitionHandler?` | [`TransitionHandler`](#transitionhandler) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler) |
+| `props.transitionHandler?` | [`TransitionHandler`](#transitionhandler-1) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler-1) |
 | `props.transitionRouter?` | [`TransitionRouter`](#transitionrouter) | calls transition handler and manages state value, details: [TransitionRouter](#transitionrouter) |
 
 #### Returns
@@ -657,7 +1071,7 @@ const Component = () => {
 ### Timer()
 
 ```ts
-function Timer(props): ReactNode;
+function Timer(props: object): ReactNode;
 ```
 
 Timer implementation
@@ -695,7 +1109,7 @@ const Component = ({ initialCounterValue }) => {
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `props` | \{ `initialCounterValue?`: `any`; `initialState?`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming?`: [`RemoveTiming`](#removetiming); `render?`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler?`: [`TimingHandler`](#timinghandler); `timingInterval?`: `any`; `transitionHandler?`: [`TransitionHandler`](#transitionhandler); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
+| `props` | \{ `initialCounterValue?`: `any`; `initialState?`: `any`; `onAfterTransition?`: [`OnAfterTransition`](#onaftertransition); `onBeforeTransition?`: [`OnBeforeTransition`](#onbeforetransition); `removeTiming?`: [`RemoveTiming`](#removetiming); `render?`: [`Render`](#render); `style?`: [`Styles`](#styles); `timerRef`: [`TimerRef`](#timerref); `timingHandler?`: [`TimingHandler`](#timinghandler); `timingInterval?`: `any`; `transitionHandler?`: [`TransitionHandler`](#transitionhandler-1); `transitionRouter?`: [`TransitionRouter`](#transitionrouter); \} | - |
 | `props.initialCounterValue?` | `any` | initial value for counter SharedValue |
 | `props.initialState?` | `any` | initial value for state SharedValue |
 | `props.onAfterTransition?` | [`OnAfterTransition`](#onaftertransition) | will be called after state change, details: [OnAfterTransition](#onaftertransition) |
@@ -706,7 +1120,7 @@ const Component = ({ initialCounterValue }) => {
 | `props.timerRef` | [`TimerRef`](#timerref) | the intended handle to perform state transitions, details: [TimerRef](#timerref) |
 | `props.timingHandler?` | [`TimingHandler`](#timinghandler) | worker that updates counter value, details: [TimingHandler](#timinghandler) |
 | `props.timingInterval?` | `any` | intended time interval for timing handler to perform counter updates, by default counter gets increased by timingInterval |
-| `props.transitionHandler?` | [`TransitionHandler`](#transitionhandler) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler) |
+| `props.transitionHandler?` | [`TransitionHandler`](#transitionhandler-1) | creates transition object based on provided transition name, details: [TransitionHandler](#transitionhandler-1) |
 | `props.transitionRouter?` | [`TransitionRouter`](#transitionrouter) | calls transition handler and manages state value, details: [TransitionRouter](#transitionrouter) |
 
 #### Returns
