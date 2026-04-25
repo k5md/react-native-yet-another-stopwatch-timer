@@ -7,6 +7,9 @@ export type PlaceProps = {
   style?: Styles,
 };
 
+/**
+ * Represents one place of a number, groups digits (0-9) for animation purposes
+ */
 export declare function Place(
   props: PlaceProps,
 ): (ReactNode);

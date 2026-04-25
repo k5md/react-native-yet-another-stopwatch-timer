@@ -1,0 +1,25 @@
+{
+  "plugin": [ "typedoc-plugin-markdown" ],
+  "router": "module",
+  "entryPoints": [ "./index.d.ts" ],
+  "out": "docs",
+  "readme": "none",
+  "useHTMLAnchors": true,
+  "disableSources": true,
+  "hidePageHeader": true,
+  "hidePageTitle": true,
+  "expandParameters": false,
+  "parametersFormat": "table",
+  "useCodeBlocks": true,
+  "excludeNotDocumented": true,
+  "groupReferencesByType": true,
+  "entryPointStrategy": "expand",
+  "exclude": [
+    "**/node_modules/**",
+    "**/__tests__/**",
+    "**/example/**"
+  ],
+  "externalSymbolLinkMappings": {
+    "@types/react": { "React.ReactNode": "#" }
+  }
+}
