@@ -22,7 +22,8 @@
     "typecheck": "tsc --project tsconfig.json",
     "update-docs": "rimraf docs && npx typedoc && node updateDocs.js && rimraf docs",
     "test": "npm test --prefix example",
-    "validate": "npm run typecheck && npm run lint && npm test && npm run update-docs"
+    "validate": "npm run typecheck && npm run lint && npm test && npm run update-docs",
+    "package": "rimraf dist && mkdir dist && npm pack --pack-destination dist"
   },
   "repository": {
     "type": "git",

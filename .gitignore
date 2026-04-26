@@ -80,3 +80,4 @@ google-services.json
 # Gradle properties file
 android/gradle.properties
 
+dist
