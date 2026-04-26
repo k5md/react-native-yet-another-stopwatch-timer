@@ -9,7 +9,7 @@
     "extensibility"
   ],
   "version": "1.0.0",
-  "description": "Highly extensible stopwatch, timer component for React Native",
+  "description": "Highly extensible stopwatch, timer, counter component for React Native",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -22,7 +22,7 @@
     "typecheck": "tsc --project tsconfig.json",
     "update-docs": "rimraf docs && npx typedoc && node updateDocs.js && rimraf docs",
     "test": "npm test --prefix example",
-    "validate": "npm run typecheck && npm run lint && npm test && npm run update-docs",
+    "validate": "npm run typecheck && npm run lint && npm test",
     "package": "rimraf dist && mkdir dist && npm pack --pack-destination dist"
   },
   "repository": {
