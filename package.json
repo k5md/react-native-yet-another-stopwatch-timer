@@ -19,7 +19,9 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "typecheck": "tsc --project tsconfig.json",
-    "update-docs": "rimraf docs && npx typedoc && node updateDocs.js && rimraf docs"
+    "update-docs": "rimraf docs && npx typedoc && node updateDocs.js && rimraf docs",
+    "test": "npm test --prefix example",
+    "validate": "npm run typecheck && npm run lint && npm test && npm run update-docs"
   },
   "repository": {
     "type": "git",
