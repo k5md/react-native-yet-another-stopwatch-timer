@@ -14,10 +14,15 @@ A fully extensible stopwatch, timer component for React Native.
 ```
 npm install --save react-native-yet-another-stopwatch-timer
 ```
-This library uses [react-native-reanimated](https://www.npmjs.com/package/react-native-reanimated) and [react-native-worklets](https://www.npmjs.com/package/react-native-worklets) listed as peer dependencies so you have to provide them:
+
+This library uses [react-native-reanimated](https://www.npmjs.com/package/react-native-reanimated) and [react-native-worklets](https://www.npmjs.com/package/react-native-worklets) listed as peer dependencies so you have to provide them **if your project does not already use them**:
 ```
 npm install --save react-native-reanimated react-native-worklets
 ```
+Yes, since v7 `npm install` automatically installs `peerDependencies`, however I got 'react-native-worklets doesn't seem to be initialized' error loop in a fresh project until installed peerDependencies manually.
+
+Add react-native-worklets plugin to your [babel.config.js](https://github.com/k5md/react-native-yet-another-stopwatch-timer/blob/6166e2976bc75d7ef5ace15f7db9a63615a7bafd/example/babel.config.js#L7) as stated in [reanimated installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/).
+
 Minimal supported versions of peer dependencies are defined by [react-native-reanimated compatibility table](https://docs.swmansion.com/react-native-reanimated/docs/guides/compatibility/) and [react-native-worklets compatibility table](https://docs.swmansion.com/react-native-worklets/docs/guides/compatibility/).
 
 ## Usage
@@ -36,7 +41,7 @@ Or check minimal examples to copy-paste:
 ```jsx
 import React, { useRef, useCallback } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import { Stopwatch, StopwatchTransitions, StopwatchStates } from 'react-native-yet-another-stopwatch-timer';
+import { Stopwatch, StopwatchTransitions } from 'react-native-yet-another-stopwatch-timer';
 
 const Component = () => {
   const timerRef = useRef(null);
@@ -45,7 +50,7 @@ const Component = () => {
   // use onBeforeTransition, onAfterTransition callback to access counter on state change
   const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
       <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
       <Stopwatch timerRef={timerRef} />
@@ -60,16 +65,16 @@ import React, { useState, useRef, useCallback } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Timer, TimerTransitions, TimerStates } from 'react-native-yet-another-stopwatch-timer';
 
-const Component = ({ initialCounterValue }) => {
+const Component = ({ initialCounterValue = 5000 }) => {
   const [ laps, setLaps ] = useState(0);
   const timerRef = useRef(null);
   // use timerRef to call transitionTo property to switch states, set transition name to one of StopwatchTransitions, counterValue if you want to change it outside of timingHandler
   const run = useCallback(() => timerRef.current?.transitionTo({ name: TimerTransitions.Run, counterValue: initialCounterValue }), [ timerRef, initialCounterValue ]);
-  const onAfterTransition = useCallback(({ state }) => {
-    if (state.value === TimerStates.Stopped) setLaps((prevLaps) => prevLaps + 1);
+  const onAfterTransition = useCallback((_, { name }, { nextState }) => {
+    if (name === TimerTransitions.Stop && nextState === TimerStates.Stopped) setLaps((prevLaps) => prevLaps + 1);
   }, [ setLaps ]);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
       <Timer timerRef={timerRef} onAfterTransition={onAfterTransition} initialCounterValue={initialCounterValue} />
       <Text>Laps: {laps}</Text>

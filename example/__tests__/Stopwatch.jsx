@@ -10,7 +10,8 @@ const Component = () => {
   // use onBeforeTransition, onAfterTransition callback to access counter on state change
   const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
   return (
-    <View>
+    // eslint-disable-next-line react-native/no-inline-styles
+    <View style={{ flex: 1 }}>
       <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
       <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
       <Stopwatch timerRef={timerRef} />

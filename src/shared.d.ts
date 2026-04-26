@@ -133,7 +133,7 @@ export type TimerRefProps = {
  *
  * The ref is also passed to {@link TimingHandler} to switch state when counter reaches certain values.
  */
-export type TimerRef = RefObject<TimerRefProps>;
+export type TimerRef = RefObject<TimerRefProps | null>;
 
 /**
  * Timing worklet that runs on UI-thread for updating counter and schedules a recursive call to itself

@@ -13,7 +13,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "scripts": {
     "lint": "eslint .",

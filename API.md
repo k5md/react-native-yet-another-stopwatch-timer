@@ -287,7 +287,7 @@ type TimerProps = SetOptional<StopwatchProps, TimerDefaultedPropKeys>;
 ### TimerRef
 
 ```ts
-type TimerRef = RefObject<TimerRefProps>;
+type TimerRef = RefObject<TimerRefProps | null>;
 ```
 
 Handle to control timer
@@ -906,7 +906,7 @@ For better precision use `onBeforeTransition` and `onAfterTransition` properties
 ```
 import React, { useRef, useCallback } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
-import { Stopwatch, StopwatchTransitions, StopwatchStates } from 'react-native-yet-another-stopwatch-timer';
+import { Stopwatch, StopwatchTransitions } from 'react-native-yet-another-stopwatch-timer';
 const Component = () => {
  const timerRef = useRef(null);
  // use timerRef to call transitionTo property to switch states
@@ -914,7 +914,7 @@ const Component = () => {
  // use onBeforeTransition, onAfterTransition callback to access counter on state change
  const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
  return (
-   <View>
+   <View style={{ flex: 1 }}>
      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
      <Stopwatch timerRef={timerRef} />
@@ -967,17 +967,17 @@ For better precision use `onBeforeTransition` and `onAfterTransition` properties
 import React, { useState, useRef, useCallback } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Timer, TimerTransitions, TimerStates } from 'react-native-yet-another-stopwatch-timer';
-const Component = ({ initialCounterValue }) => {
+const Component = ({ initialCounterValue = 5000 }) => {
  const [ laps, setLaps ] = useState(0);
  const timerRef = useRef(null);
  // use timerRef to call transitionTo property to switch states:
  // set transition name to one of StopwatchTransitions, counterValue if you want to change it outside of timingHandler
  const run = useCallback(() => timerRef.current?.transitionTo({ name: TimerTransitions.Run, counterValue: initialCounterValue }), [ timerRef ]);
- const onAfterTransition = useCallback(({ state }) => {
-   if (state.value === TimerStates.Stopped) setLaps((laps) => laps + 1);
- }, [ laps, setLaps ]);
+ const onAfterTransition = useCallback((_, { name }, { nextState }) => {
+   if (name === TimerTransitions.Stop && nextState === TimerStates.Stopped) setLaps((prevLaps) => prevLaps + 1);
+ }, [ setLaps ]);
  return (
-   <View>
+   <View style={{ flex: 1 }}>
      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
      <Timer timerRef={timerRef} onAfterTransition={onAfterTransition} initialCounterValue={initialCounterValue} />
      <Text>Laps: {laps}</Text>

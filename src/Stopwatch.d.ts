@@ -40,7 +40,7 @@ export type StopwatchProps = SetOptional<CounterProps, StopwatchDefaultedPropKey
  * ```
  * import React, { useRef, useCallback } from 'react';
  * import { View, TouchableOpacity, Text } from 'react-native';
- * import { Stopwatch, StopwatchTransitions, StopwatchStates } from 'react-native-yet-another-stopwatch-timer';
+ * import { Stopwatch, StopwatchTransitions } from 'react-native-yet-another-stopwatch-timer';
  * const Component = () => {
  *  const timerRef = useRef(null);
  *  // use timerRef to call transitionTo property to switch states
@@ -48,7 +48,7 @@ export type StopwatchProps = SetOptional<CounterProps, StopwatchDefaultedPropKey
  *  // use onBeforeTransition, onAfterTransition callback to access counter on state change
  *  const pause = useCallback(() => timerRef.current?.transitionTo({ name: StopwatchTransitions.Pause, onAfterTransition: console.log }), [ timerRef ]);
  *  return (
- *    <View>
+ *    <View style={{ flex: 1 }}>
  *      <TouchableOpacity onPress={run}><Text>Run</Text></TouchableOpacity>
  *      <TouchableOpacity onPress={pause}><Text>Pause</Text></TouchableOpacity>
  *      <Stopwatch timerRef={timerRef} />
