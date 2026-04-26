@@ -5,12 +5,16 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -24,15 +28,15 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
       - run: npm ci
       - run: npm run package 
       
       - name: Upload Tarball
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: package-tarball
           path: dist/*.tgz
@@ -41,18 +45,15 @@ jobs:
   publish-npm:
     needs: build-and-pack
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
-          registry-url: https://npmjs.org
+          registry-url: https://registry.npmjs.org
           
       - name: Download Tarball
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: package-tarball
           path: dist
