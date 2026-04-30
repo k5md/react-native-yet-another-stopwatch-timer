@@ -9,7 +9,7 @@ const apiDocs = fs.readFileSync(apiFilePath, 'utf8');
 const target = fs.readFileSync(targetPath, 'utf8');
 const regex = /<!-- API_DOCS_START -->([\s\S]*)<!-- API_DOCS_END -->/;
 if (!regex.test(target)) {
-  throw new Error('Could not find API documentation tags in README.md');
+  throw new Error('Could not find API documentation tags in API.md');
 }
 const updatedReadme = target.replace(
   regex,
